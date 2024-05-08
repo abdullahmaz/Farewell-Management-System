@@ -10,9 +10,13 @@ import Teacher_family_registration from './components/component/teacher_family_r
 import Attendance from './components/component/attendance.jsx'
 import Budget from './components/component/budget.jsx'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Toaster } from "@/components/ui/toaster"
+
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <Toaster />
     <Router>
         <Routes>
           <Route path='/' element={<Login />}/>
