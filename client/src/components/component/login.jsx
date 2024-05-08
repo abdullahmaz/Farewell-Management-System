@@ -12,20 +12,20 @@ export default function Login() {
   const navigate = useNavigate();
 
   function login() {
-    fetch('http://127.0.0.1:8080/login', {
+    fetch('http://localhost:3000/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
-    }).then((data) => {
-      console.log(data);
+    }).then(res => res.json()).then((data) => {
+      if (data.error)
+        return console.error(data.error);
+
       navigate("/dashboard");
 
     }).catch((e) => {
       console.log(e);
-      navigate("/dashboard");
-
     })
   }
 
