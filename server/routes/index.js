@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
-router.post('/login', function(req, res, next) {
-  const {email,password} = req.body
+router.post('/login', function (req, res, next) {
+  const { email, password } = req.body
 
   // get user from database (email, password)
   // if (user) res.json(user);
@@ -12,4 +11,9 @@ router.post('/login', function(req, res, next) {
   res.json({ okay: 'Express' });
 });
 
+router.post('/signup', function (req, res, next) {
+  const { email, password, firstname, lastname } = req.body
+
+  res.json({ email, password, firstname, lastname });
+});
 module.exports = router;
