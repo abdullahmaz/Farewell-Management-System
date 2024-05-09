@@ -72,21 +72,6 @@ export default function register() {
             </div>
           </div>
           <div>
-            <label
-              className="block text-sm font-medium text-gray-700"
-              htmlFor="additional-family">
-              Additional Family Members
-            </label>
-            <div className="mt-1">
-              <textarea
-                className="block w-full appearance-none rounded-md border border-neutral-200 border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm dark:border-neutral-800"
-                id="additional-family"
-                name="additional-family"
-                placeholder="Enter the names and details of any additional family members attending"
-                rows={3} />
-            </div>
-          </div>
-          <div>
             <button
               className="flex w-full justify-center rounded-md border border-neutral-200 border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-neutral-800"
               type="submit">

@@ -103,7 +103,7 @@ export default function Login() {
           <div>
             <Button
               className="flex w-full justify-center rounded-md bg-gray-900 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200 dark:focus:ring-gray-600 dark:focus:ring-offset-gray-950"
-              onClick={handleLogin}>
+              onClick={login}>
               Sign in
             </Button>
           </div>
