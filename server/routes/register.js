@@ -5,6 +5,27 @@ const connection = require('../database');
 /* GET home page. */
 router.post('/register', function(req, res) {
   const { name, email, phone, password, diet } = req.body;
+  let errors = [];
+
+  if (!name) {
+    errors.push("Name is required");
+  }
+  if (!email) {
+    errors.push("Email is required");
+  }
+  if (!phone) {
+    errors.push("Phone is required");
+  }
+  if (!password) {
+    errors.push("Password is required");
+  }
+  if (!diet) {
+    errors.push("Diet is required");
+  }
+
+  if (errors.length > 0) {
+    return res.status(400).json({ error: errors.join(", ") });
+  }
 
   // Check if email already exists
   connection.query("SELECT * FROM users WHERE email = ?", [email], function(err, results) {
@@ -24,7 +45,7 @@ router.post('/register', function(req, res) {
     connection.execute(sql, values, function(err, result) {
       if (err) {
         console.error("Error registering user: ", err);
-        return res.status(400).json({ error: "Error registering user" });
+        return res.status(500).json({ error: "Error registering user" });
       }
       console.log("User registered successfully", result);
       res.json({ message: 'User registered successfully' });
