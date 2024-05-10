@@ -1,19 +1,35 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const connection = require('../database');
 
 /* GET home page. */
 router.post('/register', function(req, res) {
-  const {name, email, phone, password, diet} = req.body
-  console.log(name)
-  console.log(email)
-  console.log(phone)
-  console.log(password)
-  console.log(diet)
-  // get user from database (email, password)
-  // if (user) res.json(user);
-  // else res.json({ error: 'User not found' });
+  const { name, email, phone, password, diet } = req.body;
 
-  res.json({ okay: 'Express' });
+  // Check if email already exists
+  connection.query("SELECT * FROM users WHERE email = ?", [email], function(err, results) {
+    if (err) {
+      console.error("Error checking user existence: ", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    if (results.length > 0) {
+      return res.status(400).json({ error: "User with this email already exists" });
+    }
+
+    // If email doesn't exist, proceed with user registration
+    var sql = "INSERT INTO users (name, email, phone, password, diet) VALUES (?, ?, ?, ?, ?)";
+    var values = [name, email, phone, password, diet];
+
+    connection.execute(sql, values, function(err, result) {
+      if (err) {
+        console.error("Error registering user: ", err);
+        return res.status(400).json({ error: "Error registering user" });
+      }
+      console.log("User registered successfully", result);
+      res.json({ message: 'User registered successfully' });
+    });
+  });
 });
 
 module.exports = router;
