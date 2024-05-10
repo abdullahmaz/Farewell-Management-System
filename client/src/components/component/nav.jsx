@@ -5,7 +5,7 @@ import { HomeIcon, BellIcon, Package2Icon, UsersIcon, ClipboardIcon, DollarSignI
 
 export default function Nav() {
     return(
-        <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
+        <div className="hidden border-r bg-blue-300 lg:block dark:bg-gray-800/40">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-[60px] items-center border-b px-6">
             <Link className="flex items-center gap-2 font-semibold" to="/dashboard">
@@ -20,45 +20,45 @@ export default function Nav() {
           <div className="flex-1 overflow-auto py-2">
             <nav className="grid items-start px-4 text-sm font-medium">
               <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white dark:text-gray-400 dark:hover:text-gray-50"
                 to="/dashboard">
-                <HomeIcon className="h-4 w-4" />
+                <HomeIcon className="h-6 w-6" />
                 Dashboard
               </Link>
               <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white dark:text-gray-400 dark:hover:text-gray-50"
                 to="/guest">
-                <UsersIcon className="h-4 w-4" />
+                <UsersIcon className="h-6 w-6" />
                 Guest List
               </Link>
               <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white dark:text-gray-400 dark:hover:text-gray-50"
                 to="/menu">
-                <ClipboardIcon className="h-4 w-4" />
+                <ClipboardIcon className="h-6 w-6" />
                 Menu Suggestions
               </Link>
               <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white dark:text-gray-400 dark:hover:text-gray-50"
                 to="/performance">
-                <UsersIcon className="h-4 w-4" />
+                <UsersIcon className="h-6 w-6" />
                 Performance Volunteer
               </Link>
               <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white dark:text-gray-400 dark:hover:text-gray-50"
                 to="/family">
-                <UsersIcon className="h-4 w-4" />
+                <UsersIcon className="h-6 w-6" />
                 Teachers and family registration
               </Link>
               <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white dark:text-gray-400 dark:hover:text-gray-50"
                 to="/attendance">
-                <ClipboardIcon className="h-4 w-4" />
+                <ClipboardIcon className="h-6 w-6" />
                 Attendance Tracking
               </Link>
               <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white dark:text-gray-400 dark:hover:text-gray-50"
                 to="/budget">
-                <DollarSignIcon className="h-4 w-4" />
+                <DollarSignIcon className="h-6 w-6" />
                 Budget Tracking
               </Link>
             </nav>

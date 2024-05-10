@@ -19,8 +19,8 @@ export default function Dashboard() {
               Add Event
             </Button>
           </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <Card>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 ">
+            <Card className = "bg-blue-100">
               <CardHeader>
                 <CardTitle>Guest List</CardTitle>
                 <CardDescription>Manage the guest list for the farewell party.</CardDescription>
@@ -63,7 +63,7 @@ export default function Dashboard() {
                 <Button size="sm">Add Guest</Button>
               </CardFooter>
             </Card>
-            <Card>
+            <Card className = "bg-blue-100">
               <CardHeader>
                 <CardTitle>Menu Suggestions</CardTitle>
                 <CardDescription>Suggest menu items for the farewell party.</CardDescription>
@@ -94,7 +94,7 @@ export default function Dashboard() {
                 <Button size="sm">Submit Menu Suggestions</Button>
               </CardFooter>
             </Card>
-            <Card>
+            <Card className = "bg-blue-100">
               <CardHeader>
                 <CardTitle>Performance Volunteer</CardTitle>
                 <CardDescription>Manage volunteers for the farewell party performance.</CardDescription>
@@ -125,7 +125,7 @@ export default function Dashboard() {
                 <Button size="sm">Finalize Volunteers</Button>
               </CardFooter>
             </Card>
-            <Card>
+            <Card className = "bg-blue-100">
               <CardHeader>
                 <CardTitle>Teachers and family registration</CardTitle>
                 <CardDescription>Register teachers and families for the farewell party.</CardDescription>
@@ -150,7 +150,7 @@ export default function Dashboard() {
                 <Button size="sm">Finalize Registrations</Button>
               </CardFooter>
             </Card>
-            <Card>
+            <Card className = "bg-blue-100">
               <CardHeader>
                 <CardTitle>Attendance Tracking</CardTitle>
                 <CardDescription>Track attendance for the farewell party.</CardDescription>
@@ -175,7 +175,7 @@ export default function Dashboard() {
                 <Button size="sm">Update Attendance</Button>
               </CardFooter>
             </Card>
-            <Card>
+            <Card className = "bg-blue-100">
               <CardHeader>
                 <CardTitle>Budget Tracking</CardTitle>
                 <CardDescription>Track the budget for the farewell party.</CardDescription>
