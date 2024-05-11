@@ -8,6 +8,9 @@ var cors = require('cors')
 var loginRouter = require('./routes/login');
 var registerRouter = require('./routes/register');
 var performanceRouter = require('./routes/performance');
+var teacher_registerationRouter = require('./routes/teacher_registeration');
+var senior_registerationRouter = require('./routes/senior_registeration');
+
 
 var app = express();
 
@@ -23,6 +26,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', loginRouter);
 app.use('/register', registerRouter);
 app.use('/performance', performanceRouter);
+app.use('/family', teacher_registerationRouter);
+app.use('/senior_students', senior_registerationRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
