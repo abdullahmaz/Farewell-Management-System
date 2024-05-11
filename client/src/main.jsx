@@ -24,14 +24,14 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Login setUser={setUser} />} />
           <Route path='/register' element={<Register setUser={setUser} />} />
-          <Route path='/dashboard' element={<Dashboard user={user} />} />
-          <Route path='/guest' element={<Guest user={user} />} />
-          <Route path='/menu' element={<Menu user={user} />} />
-          <Route path='/performance' element={<Performance user={user} />} />
+          <Route path='/dashboard' element={<Dashboard user={user} setUser={setUser}/>} />
+          <Route path='/guest' element={<Guest user={user} setUser={setUser}/>} />
+          <Route path='/menu' element={<Menu user={user} setUser={setUser}/>} />
+          <Route path='/performance' element={<Performance user={user} setUser={setUser}/>} />
           <Route path='/family' element={<TeacherFamilyRegistration />} />
           <Route path='/senior_students' element={<SeniorStudents />} />
-          <Route path='/attendance' element={<Attendance user={user} />} />
-          <Route path='/budget' element={<Budget user={user} />} />
+          <Route path='/attendance' element={<Attendance user={user} setUser={setUser}/>} />
+          <Route path='/budget' element={<Budget user={user} setUser={setUser}/>} />
         </Routes>
       </Router>
     </React.StrictMode>

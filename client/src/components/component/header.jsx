@@ -6,7 +6,7 @@ import { SearchIcon } from './icons'
 import { useNavigate } from "react-router-dom"
 
 
-export default function Header({user}){
+export default function Header({user, setUser}){
 
     const navigate = useNavigate();
     function logout(){
@@ -60,7 +60,7 @@ export default function Header({user}){
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={()=>{setUser(null); logout() }}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
