@@ -8,6 +8,7 @@ import Header from './header'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
+import { useEffect } from 'react';
 
 
 export default function Performance({user, setUser}) {
@@ -15,6 +16,7 @@ export default function Performance({user, setUser}) {
   const [performanceType, setPerformanceType] = useState();
   const [performanceDuration, setPerformanceDuration] = useState();
   const [performanceRequirements, setPerformanceRequirements] = useState();
+  const [performances, setPerformances] = useState();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -28,13 +30,13 @@ export default function Performance({user, setUser}) {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.error)
+        if (data.error){
           return toast({
             title: "Could not propose performance",
             description: data.error,
             variant: "destructive",
           });
-
+        }
         navigate("/performance");
         toast({
           title: "Successfully proposed performance",
@@ -45,6 +47,29 @@ export default function Performance({user, setUser}) {
         console.log(e);
       });
   }
+
+  function getPerformances() {
+    fetch("http://localhost:3000/performance", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.error) {
+          setPerformances(data.performances);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  useEffect(() => {
+    getPerformances();
+  }, []);
+
   return (
     (<div
       key="1"
@@ -94,7 +119,7 @@ export default function Performance({user, setUser}) {
                       onChange={(e) => setPerformanceRequirements(e.target.value)}
                       />
                   </div>
-                  <Button type="submit" className="mt-2" size="sm" variant="outline" onClick={() => proposeperformance()}>
+                  <Button className="mt-2" size="sm" variant="outline" onClick={() => proposeperformance()}>
                     Submit Proposal
                   </Button>
                 </form>
@@ -102,49 +127,20 @@ export default function Performance({user, setUser}) {
               <div>
                 <h2 className="text-2xl font-bold mb-4">Proposed Performances</h2>
                 <div className="space-y-4">
-                  <div className="border rounded-lg p-4">
-                    <h3 className="text-lg font-semibold">Dance Performance</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Duration: 15 minutes</p>
+                {performances && performances.length > 0 && performances.map((performance, index) => (
+                  <div key={index} className="border rounded-lg p-4">
+                    <h3 className="text-lg font-semibold">{performance.performance_type}</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Duration: {performance.performance_duration} minutes</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Special Requirements: Stage space, music equipment
+                      Special Requirements: {performance.performance_req}
                     </p>
                     <div className="flex justify-end mt-2">
                       <Button className="mr-2" size="sm" variant="outline">
                         Vote
                       </Button>
-                      <Button size="sm" variant="outline">
-                        View Details
-                      </Button>
                     </div>
                   </div>
-                  <div className="border rounded-lg p-4">
-                    <h3 className="text-lg font-semibold">Acapella Performance</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Duration: 20 minutes</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Special Requirements: Microphones</p>
-                    <div className="flex justify-end mt-2">
-                      <Button className="mr-2" size="sm" variant="outline">
-                        Vote
-                      </Button>
-                      <Button size="sm" variant="outline">
-                        View Details
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="border rounded-lg p-4">
-                    <h3 className="text-lg font-semibold">Drama Skit</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Duration: 25 minutes</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Special Requirements: Stage props, lighting
-                    </p>
-                    <div className="flex justify-end mt-2">
-                      <Button className="mr-2" size="sm" variant="outline">
-                        Vote
-                      </Button>
-                      <Button size="sm" variant="outline" onClick={() => proposeperformance()}>
-                        View Details
-                      </Button>
-                    </div>
-                  </div>
+                ))}
                 </div>
               </div>
             </div>

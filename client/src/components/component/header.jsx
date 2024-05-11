@@ -33,7 +33,7 @@ export default function Header({user, setUser}){
             </form>
           </div>
           <div className="text-md">
-          Welcome, {user.name}
+          Welcome
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
