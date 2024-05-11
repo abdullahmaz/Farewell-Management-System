@@ -4,7 +4,6 @@ const connection = require('../database');
 /* GET home page. */
 router.post('/login', function(req, res, next) {
   const {email,password} = req.body
-
   connection.query("SELECT * FROM users WHERE email = ? AND password = ?", [email, password], function(err, results) {
     if (err) {
       console.error("Error verifying user: ", err);

@@ -15,12 +15,9 @@ export default function Dashboard() {
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
           <div className="flex items-center">
             <h1 className="font-semibold text-lg md:text-2xl">Farewell Party Dashboard</h1>
-            <Button className="ml-auto" size="sm">
-              Add Event
-            </Button>
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 ">
-            <Card className = "bg-blue-100">
+            <Card>
               <CardHeader>
                 <CardTitle>Guest List</CardTitle>
                 <CardDescription>Manage the guest list for the farewell party.</CardDescription>
@@ -59,11 +56,8 @@ export default function Dashboard() {
                   </TableBody>
                 </Table>
               </CardContent>
-              <CardFooter>
-                <Button size="sm">Add Guest</Button>
-              </CardFooter>
             </Card>
-            <Card className = "bg-blue-100">
+            <Card>
               <CardHeader>
                 <CardTitle>Menu Suggestions</CardTitle>
                 <CardDescription>Suggest menu items for the farewell party.</CardDescription>
@@ -90,11 +84,8 @@ export default function Dashboard() {
                   </div>
                 </div>
               </CardContent>
-              <CardFooter>
-                <Button size="sm">Submit Menu Suggestions</Button>
-              </CardFooter>
             </Card>
-            <Card className = "bg-blue-100">
+            <Card>
               <CardHeader>
                 <CardTitle>Performance Volunteer</CardTitle>
                 <CardDescription>Manage volunteers for the farewell party performance.</CardDescription>
@@ -121,11 +112,8 @@ export default function Dashboard() {
                   </div>
                 </div>
               </CardContent>
-              <CardFooter>
-                <Button size="sm">Finalize Volunteers</Button>
-              </CardFooter>
             </Card>
-            <Card className = "bg-blue-100">
+            <Card>
               <CardHeader>
                 <CardTitle>Teachers and family registration</CardTitle>
                 <CardDescription>Register teachers and families for the farewell party.</CardDescription>
@@ -146,11 +134,8 @@ export default function Dashboard() {
                   </div>
                 </div>
               </CardContent>
-              <CardFooter>
-                <Button size="sm">Finalize Registrations</Button>
-              </CardFooter>
             </Card>
-            <Card className = "bg-blue-100">
+            <Card>
               <CardHeader>
                 <CardTitle>Attendance Tracking</CardTitle>
                 <CardDescription>Track attendance for the farewell party.</CardDescription>
@@ -171,11 +156,8 @@ export default function Dashboard() {
                   </div>
                 </div>
               </CardContent>
-              <CardFooter>
-                <Button size="sm">Update Attendance</Button>
-              </CardFooter>
             </Card>
-            <Card className = "bg-blue-100">
+            <Card>
               <CardHeader>
                 <CardTitle>Budget Tracking</CardTitle>
                 <CardDescription>Track the budget for the farewell party.</CardDescription>
@@ -202,9 +184,6 @@ export default function Dashboard() {
                   </div>
                 </div>
               </CardContent>
-              <CardFooter>
-                <Button size="sm">Update Budget</Button>
-              </CardFooter>
             </Card>
           </div>
         </main>

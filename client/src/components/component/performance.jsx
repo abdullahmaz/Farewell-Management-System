@@ -5,9 +5,46 @@ import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@
 import { Textarea } from "@/components/ui/textarea"
 import Nav from './nav.jsx'
 import Header from './header'
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/components/ui/use-toast';
 
 
 export default function Performance() {
+
+  const [performanceType, setPerformanceType] = useState();
+  const [performanceDuration, setPerformanceDuration] = useState();
+  const [performanceRequirements, setPerformanceRequirements] = useState();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  function proposeperformance() {
+    fetch("http://localhost:3000/performance/propose", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ performanceType, performanceDuration, performanceRequirements }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error)
+          return toast({
+            title: "Could not propose performance",
+            description: data.error,
+            variant: "destructive",
+          });
+
+        navigate("/performance");
+        toast({
+          title: "Successfully proposed performance",
+          variant: "success",
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
   return (
     (<div
       key="1"
@@ -22,68 +59,11 @@ export default function Performance() {
           <div className="border shadow-sm rounded-lg">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
               <div>
-                <h2 className="text-2xl font-bold mb-4">Volunteer Roles</h2>
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-lg font-semibold">Stage Crew</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Assist with setting up and breaking down the stage, including lighting, sound, and props.
-                    </p>
-                    <Button className="mt-2" size="sm" variant="outline">
-                      Sign Up
-                    </Button>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">Ushers</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Help guests find their seats and ensure the event runs smoothly.
-                    </p>
-                    <Button className="mt-2" size="sm" variant="outline">
-                      Sign Up
-                    </Button>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">Backstage Assistants</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Provide support to performers, including costume changes and prop management.
-                    </p>
-                    <Button className="mt-2" size="sm" variant="outline">
-                      Sign Up
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold mb-4">Volunteer Schedule</h2>
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-lg font-semibold">Stage Crew</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Setup: 4:00 PM - 5:00 PM
-                      <br />
-                      Breakdown: 9:00 PM - 10:00 PM
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">Ushers</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">5:30 PM - 8:30 PM</p>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">Backstage Assistants</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">5:00 PM - 9:00 PM</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="border shadow-sm rounded-lg">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
-              <div>
                 <h2 className="text-2xl font-bold mb-4">Propose a Performance</h2>
                 <form className="space-y-4">
                   <div>
                     <Label htmlFor="performance-type">Performance Type</Label>
-                    <Select id="performance-type">
+                    <Select id="performance-type" value={performanceType} onValueChange={setPerformanceType}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select performance type" />
                       </SelectTrigger>
@@ -100,13 +80,19 @@ export default function Performance() {
                     <Input
                       id="performance-duration"
                       placeholder="Enter duration (e.g., 10 minutes)"
-                      type="text" />
+                      type="text" 
+                      value={performanceDuration}
+                      onChange={(e) => setPerformanceDuration(e.target.value)}
+                      />
                   </div>
                   <div>
                     <Label htmlFor="performance-requirements">Special Requirements</Label>
                     <Textarea
                       id="performance-requirements"
-                      placeholder="Enter any special requirements" />
+                      placeholder="Enter any special requirements" 
+                      value={performanceRequirements}
+                      onChange={(e) => setPerformanceRequirements(e.target.value)}
+                      />
                   </div>
                   <Button type="submit" className="mt-2" size="sm" variant="outline">
                     Submit Proposal
@@ -154,7 +140,7 @@ export default function Performance() {
                       <Button className="mr-2" size="sm" variant="outline">
                         Vote
                       </Button>
-                      <Button size="sm" variant="outline">
+                      <Button size="sm" variant="outline" onClick={() => proposeperformance()}>
                         View Details
                       </Button>
                     </div>

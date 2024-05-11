@@ -5,7 +5,7 @@ import { HomeIcon, BellIcon, Package2Icon, UsersIcon, ClipboardIcon, DollarSignI
 
 export default function Nav() {
     return(
-        <div className="hidden border-r bg-blue-300 lg:block dark:bg-gray-800/40">
+        <div className="hidden border-r bg-amber-300 lg:block dark:bg-gray-800/40">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-[60px] items-center border-b px-6">
             <Link className="flex items-center gap-2 font-semibold" to="/dashboard">
@@ -42,12 +42,6 @@ export default function Nav() {
                 to="/performance">
                 <UsersIcon className="h-6 w-6" />
                 Performance Volunteer
-              </Link>
-              <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white dark:text-gray-400 dark:hover:text-gray-50"
-                to="/family">
-                <UsersIcon className="h-6 w-6" />
-                Teachers and family registration
               </Link>
               <Link
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white dark:text-gray-400 dark:hover:text-gray-50"
