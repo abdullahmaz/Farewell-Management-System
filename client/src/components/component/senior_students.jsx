@@ -14,6 +14,7 @@ export default function SeniorStudents() {
     const [email, setEmail] = useState('');
     const [contact, setContact] = useState('');
     const [password, setPassword] = useState('');
+    const [diet, setDiet] = useState('');
     const [count, setCount] = useState(0);
     const { toast } = useToast();
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ export default function SeniorStudents() {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ name, email, contact, password }),
+            body: JSON.stringify({ name, email, contact, password, diet }),
         })
             .then((res) => res.json())
             .then((data) => {
@@ -46,22 +47,22 @@ export default function SeniorStudents() {
 
     function getCountSeniorStudents() {
         fetch("http://localhost:3000/senior_students/countseniors", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
         })
-          .then((res) => res.json())
-          .then((data) => {
-            if (!data.error) {
-              setCount(data.count);
-            }
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      }
-    
+            .then((res) => res.json())
+            .then((data) => {
+                if (!data.error) {
+                    setCount(data.count);
+                }
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    }
+
     useEffect(() => getCountSeniorStudents(), []);
 
     return (
@@ -171,6 +172,27 @@ export default function SeniorStudents() {
                                     <div className="space-y-1">
                                         <Label htmlFor="password">Password</Label>
                                         <Input id="password" placeholder="Enter your password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                    </div>
+                                    <div>
+                                        <Label className="block text-sm font-medium text-black" htmlFor="dietary">
+                                            Dietary Preferences
+                                        </Label>
+                                        <select
+                                            className="block w-full appearance-none rounded-md border border-neutral-200 border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm dark:border-neutral-800"
+                                            id="dietary"
+                                            name="dietary"
+                                            value={diet}
+                                            onChange={(e) => {
+                                                setDiet(e.target.value);
+                                            }}
+                                        >
+                                            <option>None</option>
+                                            <option>Vegetarian</option>
+                                            <option>Vegan</option>
+                                            <option>Gluten-free</option>
+                                            <option>Halal</option>
+                                            <option>Kosher</option>
+                                        </select>
                                     </div>
                                     <Button className="w-full" type="submit" onClick={registerSeniorStudent}>
                                         Submit

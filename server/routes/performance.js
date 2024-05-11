@@ -24,7 +24,7 @@ router.post('/propose', function (req, res) {
         return res.status(400).json({ error: errors.join(", ") });
     }
 
-    const sql = "INSERT INTO performance (performance_type, performance_duration, performance_req) VALUES (?, ?, ?)";
+    const sql = "INSERT INTO performance (type, duration, special_req) VALUES (?, ?, ?)";
     const values = [performanceType, performanceDuration, performanceRequirements];
 
     connection.query(sql, values, function (err, results) {

@@ -4,7 +4,7 @@ const connection = require('../database');
 /* GET home page. */
 router.post('/login', function(req, res, next) {
   const {email,password} = req.body
-  connection.query("SELECT * FROM users WHERE email = ? AND password = ?", [email, password], function(err, results) {
+  connection.query("SELECT * FROM Student JOIN User ON Student.user_id = User.user_id WHERE email = ? AND password = ?", [email, password], function(err, results) {
     if (err) {
       console.error("Error verifying user: ", err);
       return res.status(500).json({ error: "Database error" });
@@ -16,8 +16,8 @@ router.post('/login', function(req, res, next) {
       user_details = {
         name: user.name,
         email: user.email,
-        phone: user.phone,
-        diet: user.diet
+        phone: user.contactno,
+        diet: user.dietary_pref
       };
 
       console.log("User verified successfully");

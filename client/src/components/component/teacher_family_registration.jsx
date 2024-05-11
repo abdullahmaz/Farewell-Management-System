@@ -254,11 +254,11 @@ export default function teacher_family_registration() {
                 <div className="space-y-4">
                   {teachers && teachers.length > 0 ? (
                     teachers.map((teacher) => (
-                      <div className="border rounded-lg p-4" key={teacher.id}>
+                      <div className="border rounded-lg p-4" key={teacher.teacher_id}>
                         <h3 className="text-lg font-semibold">{teacher.name}</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Subject: {teacher.subject}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Subject: {teacher.sub_taught}</p>
                         <p className="text-sm text-gray-500 dark:text-gray-400">Email: {teacher.email}</p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Phone: {teacher.phone}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Phone: {teacher.contactno}</p>
                       </div>
                     ))
                   ) : (
@@ -272,8 +272,8 @@ export default function teacher_family_registration() {
                   {families && families.length > 0 ? (
                     families.map((family) => (
                       <div className="border rounded-lg p-4" key={family.id}>
-                        <h3 className="text-lg font-semibold">{family.familyname}</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Number of Members: {family.familymembers}</p>
+                        <h3 className="text-lg font-semibold">{family.name}</h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Number of Members: {family.count}</p>
                       </div>
                     ))
                   ) : (

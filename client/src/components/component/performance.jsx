@@ -135,10 +135,10 @@ export default function Performance({user, setUser}) {
                 <div className="space-y-4">
                 {performances && performances.length > 0 && performances.map((performance, index) => (
                   <div key={index} className="border rounded-lg p-4">
-                    <h3 className="text-lg font-semibold">{performance.performance_type}</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Duration: {performance.performance_duration} minutes</p>
+                    <h3 className="text-lg font-semibold">{performance.type.toUpperCase()}</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Duration: {performance.duration} minutes</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Special Requirements: {performance.performance_req}
+                      Special Requirements: {performance.special_req}
                     </p>
                     <div className="flex justify-end mt-2">
                       <Button className="mr-2" size="sm" variant="outline">
