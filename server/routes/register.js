@@ -47,8 +47,16 @@ router.post('/register', function(req, res) {
         console.error("Error registering user: ", err);
         return res.status(500).json({ error: "Error registering user" });
       }
+
+      req.session.user = {
+        name : name,
+        email : email,
+        phone : phone,
+        diet : diet
+      };
+
       console.log("User registered successfully", result);
-      res.json({ message: 'User registered successfully' });
+      res.json({ message: 'User registered successfully', user: req.session.user });
     });
   });
 });
