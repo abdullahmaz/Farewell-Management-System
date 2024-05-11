@@ -94,7 +94,7 @@ export default function Performance({user, setUser}) {
                       onChange={(e) => setPerformanceRequirements(e.target.value)}
                       />
                   </div>
-                  <Button type="submit" className="mt-2" size="sm" variant="outline">
+                  <Button type="submit" className="mt-2" size="sm" variant="outline" onClick={() => proposeperformance()}>
                     Submit Proposal
                   </Button>
                 </form>
