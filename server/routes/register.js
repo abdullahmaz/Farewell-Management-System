@@ -55,8 +55,18 @@ router.post('/register', function(req, res) {
           return res.status(500).json({ error: "Error registering user in Student table" });
         }
 
-        console.log("User registered successfully", result);
-        res.json({ message: 'User registered successfully', user: { name, email, phone, diet } });
+        const studentId = result.insertId;
+
+        // Insert into Manager table
+        connection.query("INSERT INTO Manager (student_id) VALUES (?)", [studentId], function(err, result) {
+          if (err) {
+            console.error("Error inserting into Manager table: ", err);
+            return res.status(500).json({ error: "Error registering user in Manager table" });
+          }
+
+          console.log("Manager registered successfully", result);
+          res.json({ message: 'Manager registered successfully', user: { name, email, phone, diet } });
+        });
       });
     });
   });

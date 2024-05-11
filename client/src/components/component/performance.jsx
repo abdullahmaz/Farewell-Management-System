@@ -20,7 +20,7 @@ export default function Performance({user, setUser}) {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  function proposeperformance(event) {
+  function proposeperformance() {
     fetch("http://localhost:3000/performance/propose", {
       method: "POST",
       headers: {
