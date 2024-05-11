@@ -18,8 +18,8 @@ router.post('/add', function (req, res) {
     }
 
     // First, insert into Student table
-    const menuSql = 'INSERT INTO Menu (name, price) VALUES (?,?)';
-    const menuValues = [name, price];
+    const menuSql = 'INSERT INTO Menu (name, price, votes) VALUES (?,?,?)';
+    const menuValues = [name, price, 0];
     connection.query(menuSql, menuValues, function (err, result) {
         if (err) {
             res.status(500).json({ error: 'Failed to enter Menu' });
@@ -28,5 +28,17 @@ router.post('/add', function (req, res) {
             res.send({message: 'Menu entered successfully'});
     });
 });
+
+router.get('/', function (req, res) {
+    const menuSql = 'SELECT name, price, votes FROM Menu';
+    connection.query(menuSql, function (err, results) {
+        if (err) {
+            res.status(500).json({ error: 'Failed to retrieve Menu' });
+            return;
+        }
+        res.json({ menu: results });
+    });
+});
+
 
 module.exports = router;

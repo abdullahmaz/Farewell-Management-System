@@ -10,12 +10,8 @@ var registerRouter = require('./routes/register');
 var performanceRouter = require('./routes/performance');
 var teacher_registerationRouter = require('./routes/teacher_registeration');
 var senior_registerationRouter = require('./routes/senior_registeration');
-<<<<<<< HEAD
 var guestsRouter = require('./routes/guests');
-
-=======
 var menuRouter = require('./routes/menu');
->>>>>>> d99c3879da3998def8dbc3bcf2d576c3242252a5
 
 
 var app = express();
@@ -35,11 +31,8 @@ app.use('/register', registerRouter);
 app.use('/performance', performanceRouter);
 app.use('/teacher_family', teacher_registerationRouter);
 app.use('/senior_students', senior_registerationRouter);
-<<<<<<< HEAD
 app.use('/guests', guestsRouter);
-=======
 app.use('/menu', menuRouter);
->>>>>>> d99c3879da3998def8dbc3bcf2d576c3242252a5
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

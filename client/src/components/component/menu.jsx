@@ -1,11 +1,12 @@
 import Nav from './nav.jsx'
 import Header from './header'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useToast } from '../ui/use-toast';
 
 export default function Menu({ user, setUser }) {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
+  const [menu, setMenu] = useState();
   const { toast } = useToast()
 
   function additem() {
@@ -34,6 +35,27 @@ export default function Menu({ user, setUser }) {
         console.log(e);
       });
   }
+
+  function getMenu() {
+    fetch("http://localhost:3000/menu", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.error) {
+          setMenu(data.menu);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+  useEffect(() => {
+    getMenu();
+  }, []);
 
   return (
     (<div
@@ -64,24 +86,14 @@ export default function Menu({ user, setUser }) {
               <div>
                 <h2 className="text-2xl font-bold mb-4">Menu</h2>
                 <ul className="space-y-2 text-sm text-gray-500 dark:text-gray-400">
-                  <li>
-                    Grilled Salmon
-                    <span className="ml-2 text-xs">(Budget: $200)</span>
-                    <span className="ml-2 text-xs">Votes: 10</span>
-                    <button className="ml-2">Vote</button>
-                  </li>
-                  <li>
-                    Chicken Parmesan
-                    <span className="ml-2 text-xs">(Budget: $150)</span>
-                    <span className="ml-2 text-xs">Votes: 10</span>
-                    <button className="ml-2">Vote</button>
-                  </li>
-                  <li>
-                    Vegetable Lasagna
-                    <span className="ml-2 text-xs">(Budget: $130)</span>
-                    <span className="ml-2 text-xs">Votes: 10</span>
-                    <button className="ml-2">Vote</button>
-                  </li>
+                  {menu && menu.map((item, index) => (
+                    <li key={index}>
+                      {item.name}
+                      <span className="ml-2 text-xs">(Budget: PKR{item.price})</span>
+                      <span className="ml-2 text-xs">Votes: {item.votes}</span>
+                      <button className="ml-2">Vote</button>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
