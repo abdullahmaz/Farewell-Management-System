@@ -30,10 +30,10 @@ export default function Login({setUser}) {
         })
       setUser(data.user);
       navigate("/dashboard");
-      toast({
-        title: "Login Successful",
-        variant: "success"
-      })
+        toast({
+          title: "Login Successful",
+          variant: "success"
+        })
 
     }).catch((e) => {
       console.log(e);
@@ -43,7 +43,7 @@ export default function Login({setUser}) {
   return (
     <div className="bg-cover bg-center h-screen" style={{ backgroundImage: `url('/login_bg.jpg')` }}>
   <div className="flex justify-center items-center h-screen">
-    <div className="bg-white bg-opacity-30 rounded-lg p-8 shadow-lg w-full max-w-md">
+    <div className="bg-white bg-opacity-60 rounded-lg p-8 shadow-lg w-full max-w-md">
       <div className="flex flex-col items-center justify-center space-y-8">
         <div className="text-center">
           <PartyPopperIcon className="mx-auto h-12 w-12 text-black" />
@@ -91,20 +91,18 @@ export default function Login({setUser}) {
                 id="password"
                 name="password"
                 required
-                type="password" onChange={(e) => { setPassword(e.target.value) }} />
+                type="password" onChange={(e) => { setPassword(e.target.value) }} onKeyPress={(event) => {if (event.key === 'Enter')login()}} />
             </div>
           </div>
           <div className="flex justify-between">
             <Button
               className="flex justify-center rounded-md bg-gray-900 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200 dark:focus:ring-gray-600 dark:focus:ring-offset-gray-950"
-              onClick={login}
-            >
+              onClick={login}>
               Sign in
             </Button>
             <Button
               className="flex justify-center rounded-md bg-gray-300 py-2 px-4 text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200 dark:focus:ring-gray-600 dark:focus:ring-offset-gray-950"
-              onClick={() => navigate("/family")}
-            >
+              onClick={() => navigate("/teacher_family") }>
               Visitor
             </Button>
           </div>

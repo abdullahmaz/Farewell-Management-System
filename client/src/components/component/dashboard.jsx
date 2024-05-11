@@ -115,28 +115,6 @@ export default function Dashboard({setUser,user}) {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Teachers and family registration</CardTitle>
-                <CardDescription>Register teachers and families for the farewell party.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-4">
-                  <div className="flex items-center justify-between">
-                    <span>Teacher Registration</span>
-                    <Button size="sm" variant="outline">
-                      Register Teachers
-                    </Button>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span>Family Registration</span>
-                    <Button size="sm" variant="outline">
-                      Register Families
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
                 <CardTitle>Attendance Tracking</CardTitle>
                 <CardDescription>Track attendance for the farewell party.</CardDescription>
               </CardHeader>

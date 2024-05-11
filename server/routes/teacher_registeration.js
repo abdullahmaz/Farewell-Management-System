@@ -14,36 +14,52 @@ router.post('/registerteacher', function (req, res) {
     if (errors.length > 0) {
         return res.status(400).json({ error: errors.join(", ") });
     }
-
-    const sql = 'INSERT INTO teacher (name, email, subject, phone) VALUES (?,?,?,?,?)';
+    const sql = 'INSERT INTO teacher (name, email, subject, phone) VALUES (?,?,?,?)';
     const values = [name, email, subject, phone];
     connection.query(sql, values, function (err, result) {
         if (err) throw err;
-        res.send('Teacher registered successfully');
+        res.send({message: 'Teacher registered successfully'});
     });
-
 });
 
 router.post('/registerfamily', function (req, res) {
-    const { family_name, no_of_family } = req.body;
+    const { familyname, familymembers } = req.body;
 
     errors = [];
-    if (!family_name) errors.push('Family name is required');
-    if (!no_of_family) errors.push('Number of family is required');
-
+    if (!familyname) errors.push('Family name is required');
+    if (!familymembers) errors.push('Number of family members is required');
     if (errors.length > 0) {
         return res.status(400).json({ error: errors.join(", ") });
     }
 
-    const sql = 'INSERT INTO family (family_name, no_of_family) VALUES (?,?,?,?,?)';
-    const values = [family_name, no_of_family];
+    const sql = 'INSERT INTO family (familyname, familymembers) VALUES (?,?)';
+    const values = [familyname, familymembers];
     connection.query(sql, values, function (err, result) {
         if (err) throw err;
-        res.send('Family registered successfully');
+        res.send({message: 'Family registered successfully'});
     });
+});
 
+router.get('/getallteachers', function (req, res) {
+    const sql = 'SELECT * FROM teacher';
+    connection.query(sql, function (err, results) {
+        if (err) {
+            console.error("Error fetching teachers: ", err);
+            return res.status(500).json({ error: "Database error while fetching teachers" });
+        }
+        res.json({ teachers: results });
+    });
+});
 
-
+router.get('/getallfamilies', function (req, res) {
+    const sql = 'SELECT * FROM family';
+    connection.query(sql, function (err, results) {
+        if (err) {
+            console.error("Error fetching families: ", err);
+            return res.status(500).json({ error: "Database error while fetching families" });
+        }
+        res.json({ families: results });
+    });
 });
 
 module.exports = router;

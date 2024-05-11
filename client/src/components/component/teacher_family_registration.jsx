@@ -4,8 +4,11 @@ import { Label } from "@/components/ui/label"
 import { Link } from 'react-router-dom'
 import { BellIcon, Package2Icon, UsersIcon } from './icons'
 import { useNavigate } from "react-router-dom"
-import { SearchIcon} from "./icons"
+import { SearchIcon } from "./icons"
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
+import { useState, useEffect } from "react";
+import { useToast } from "@/components/ui/use-toast";
+
 
 export default function teacher_family_registration() {
   const navigate = useNavigate();
@@ -13,14 +16,20 @@ export default function teacher_family_registration() {
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [phone, setPhone] = useState('');
+  const [familyname, setFamilyName] = useState('');
+  const [familymembers, setFamilyMembers] = useState('');
+  const [teachers, setTeachers] = useState();
+  const [families, setFamilies] = useState();
+  const { toast } = useToast();
 
-  const registerTeacher = () => {
-    fetch("http://localhost:3000/teacher_family/register", {
+
+  function registerTeacher() {
+    fetch("http://localhost:3000/teacher_family/registerteacher", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, subject, phone}),
+      body: JSON.stringify({ name, email, subject, phone }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -39,13 +48,79 @@ export default function teacher_family_registration() {
         console.log(e);
       });
   }
+
+  function getTeachers() {
+    fetch("http://localhost:3000/teacher_family/getallteachers", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.error) {
+          setTeachers(data.teachers);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  function registerFamily() {
+    fetch("http://localhost:3000/teacher_family/registerfamily", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ familyname, familymembers }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error)
+          return toast({
+            title: "Registration Failed",
+            description: data.error,
+            variant: "destructive",
+          });
+        toast({
+          title: "Successfully Registered",
+          variant: "success",
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  function getFamilies() {
+    fetch("http://localhost:3000/teacher_family/getallfamilies", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.error) {
+          setFamilies(data.families);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  useEffect(() => getTeachers(), []);
+  useEffect(() => getFamilies(), []);
+
   return (
     (<div
       className="grid min-h-screen w-full overflow-hidden lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-amber-300 lg:block dark:bg-gray-800/40">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-[60px] items-center border-b px-6">
-            <Link className="flex items-center gap-2 font-semibold" to="/family">
+            <Link className="flex items-center gap-2 font-semibold" to="/teacher_family">
               <Package2Icon className="h-6 w-6" />
               <span className="">Farewell Party</span>
             </Link>
@@ -58,7 +133,7 @@ export default function teacher_family_registration() {
             <nav className="grid items-start px-4 text-sm font-medium">
               <Link
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white dark:text-gray-400 dark:hover:text-gray-50"
-                to="/family">
+                to="/teacher_family">
                 <UsersIcon className="h-6 w-6" />
                 Teachers and family registration
               </Link>
@@ -74,7 +149,7 @@ export default function teacher_family_registration() {
         </div>
       </div>
       <div className="flex flex-col">
-      <header
+        <header
           className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-amber-300 px-6 dark:bg-gray-800/40">
           <div className="lg:hidden" href="#">
             <Package2Icon className="h-6 w-6" />
@@ -117,10 +192,10 @@ export default function teacher_family_registration() {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={()=>{navigate('/')}}>Go Back</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { navigate('/') }}>Go Back</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </header> 
+        </header>
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
           <div className="flex items-center">
             <h1 className="font-semibold text-lg md:text-2xl">Teachers and Family Registration</h1>
@@ -129,46 +204,46 @@ export default function teacher_family_registration() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
               <div>
                 <h2 className="text-2xl font-bold mb-4">Teacher Registration</h2>
-                <form className="space-y-4">
+                <div className="space-y-4">
                   <div>
                     <Label htmlFor="teacher-name">Name</Label>
-                    <Input id="teacher-name" placeholder="Enter teacher's name" type="text" onChange={(e) => setName(e.target.value)}/>
+                    <Input id="teacher-name" placeholder="Enter teacher's name" type="text" onChange={(e) => setName(e.target.value)} />
                   </div>
                   <div>
                     <Label htmlFor="teacher-email">Email</Label>
-                    <Input id="teacher-email" placeholder="Enter teacher's email" type="email" onChange={(e) => setEmail(e.target.value)}/>
+                    <Input id="teacher-email" placeholder="Enter teacher's email" type="email" onChange={(e) => setEmail(e.target.value)} />
                   </div>
                   <div>
                     <Label htmlFor="teacher-subject">Subject</Label>
-                    <Input id="teacher-subject" placeholder="Enter subject taught" type="text" onChange={(e) => setSubject(e.target.value)}/>
+                    <Input id="teacher-subject" placeholder="Enter subject taught" type="text" onChange={(e) => setSubject(e.target.value)} />
                   </div>
                   <div>
                     <Label htmlFor="teacher-phone">Phone</Label>
-                    <Input id="teacher-phone" placeholder="Enter teacher's phone number" type="tel" onChange={(e) => setPhone(e.target.value)}/>
+                    <Input id="teacher-phone" placeholder="Enter teacher's phone number" type="tel" onChange={(e) => setPhone(e.target.value)} />
                   </div>
-                  <Button type="submit" variant="primary" className="rounded-md bg-gray-900 text-white">
+                  <Button onClick={registerTeacher} variant="primary" className="rounded-md bg-gray-900 text-white">
                     Register Teacher
                   </Button>
-                </form>
+                </div>
               </div>
               <div>
                 <h2 className="text-2xl font-bold mb-4">Family Registration</h2>
-                <form className="space-y-4">
+                <div className="space-y-4">
                   <div>
                     <Label htmlFor="family-name">Family Name</Label>
-                    <Input id="family-name" placeholder="Enter family name" type="text" />
+                    <Input id="family-name" placeholder="Enter family name" type="text" onChange={(e) => setFamilyName(e.target.value)} />
                   </div>
                   <div>
                     <Label htmlFor="family-members">Number of Family Members</Label>
                     <Input
                       id="family-members"
                       placeholder="Enter number of family members"
-                      type="number" />
+                      onChange={(e) => setFamilyMembers(e.target.value)} />
                   </div>
-                  <Button type="submit" variant="primary" className="rounded-md bg-gray-900 text-white">
+                  <Button type="submit" variant="primary" className="rounded-md bg-gray-900 text-white" onClick={registerFamily}>
                     Register Family
                   </Button>
-                </form>
+                </div>
               </div>
             </div>
           </div>
@@ -177,50 +252,33 @@ export default function teacher_family_registration() {
               <div>
                 <h2 className="text-2xl font-bold mb-4">Registered Teachers</h2>
                 <div className="space-y-4">
-                  <div className="border rounded-lg p-4">
-                    <h3 className="text-lg font-semibold">John Doe</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Subject: Math</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Email: john.doe@example.com</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Phone: 555-1234</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Number of Family Members: 3</p>
-                  </div>
-                  <div className="border rounded-lg p-4">
-                    <h3 className="text-lg font-semibold">Jane Smith</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Subject: English</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Email: jane.smith@example.com</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Phone: 555-5678</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Number of Family Members: 2</p>
-                  </div>
-                  <div className="border rounded-lg p-4">
-                    <h3 className="text-lg font-semibold">Michael Johnson</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Subject: Science</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Email: michael.johnson@example.com</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Phone: 555-9012</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Number of Family Members: 4</p>
-                  </div>
+                  {teachers && teachers.length > 0 ? (
+                    teachers.map((teacher) => (
+                      <div className="border rounded-lg p-4" key={teacher.id}>
+                        <h3 className="text-lg font-semibold">{teacher.name}</h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Subject: {teacher.subject}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Email: {teacher.email}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Phone: {teacher.phone}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No teachers registered yet.</p>
+                  )}
                 </div>
               </div>
               <div>
                 <h2 className="text-2xl font-bold mb-4">Registered Families</h2>
                 <div className="space-y-4">
-                  <div className="border rounded-lg p-4">
-                    <h3 className="text-lg font-semibold">Smith Family</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Email: smith@example.com</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Phone: 555-2468</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Number of Members: 4</p>
-                  </div>
-                  <div className="border rounded-lg p-4">
-                    <h3 className="text-lg font-semibold">Johnson Family</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Email: johnson@example.com</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Phone: 555-3690</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Number of Members: 6</p>
-                  </div>
-                  <div className="border rounded-lg p-4">
-                    <h3 className="text-lg font-semibold">Lee Family</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Email: lee@example.com</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Phone: 555-7890</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Number of Members: 3</p>
-                  </div>
+                  {families && families.length > 0 ? (
+                    families.map((family) => (
+                      <div className="border rounded-lg p-4" key={family.id}>
+                        <h3 className="text-lg font-semibold">{family.familyname}</h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Number of Members: {family.familymembers}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No families registered yet.</p>
+                  )}
                 </div>
               </div>
             </div>
