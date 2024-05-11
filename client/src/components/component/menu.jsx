@@ -1,10 +1,12 @@
 import Nav from './nav.jsx'
 import Header from './header'
 import { useState } from "react"
+import { useToast } from '../ui/use-toast';
 
 export default function Menu({ user, setUser }) {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
+  const { toast } = useToast()
 
   function additem() {
     fetch("http://localhost:3000/menu/add", {
@@ -23,8 +25,6 @@ export default function Menu({ user, setUser }) {
             variant: "destructive",
           });
 
-        setUser(data.user);
-        navigate("/dashboard");
         toast({
           title: "Successfully added item",
           variant: "success",
