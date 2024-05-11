@@ -40,7 +40,7 @@ export default function Register() {
   }
 
   return (
-    <div className="bg-cover bg-center h-screen" style={{backgroundImage: `url('/register_bg.jpg')`}}>
+    <div className="bg-cover bg-center" style={{backgroundImage: `url('/register_bg.jpg')`}}>
       <div className="flex min-h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md">
           <div className="bg-white bg-opacity-50 rounded px-8 pt-6 pb-8 mb-4">
