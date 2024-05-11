@@ -27,7 +27,8 @@ export default function Register() {
             description: data.error,
             variant: "destructive",
           });
-
+        
+        setUser(data.user);
         navigate("/dashboard");
         toast({
           title: "Successfully Registered",

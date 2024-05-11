@@ -13,7 +13,7 @@ router.post('/login', function(req, res, next) {
     if (results.length > 0) {
 
       const user = results[0]; // Assuming unique emails, take the first result
-      req.session.user = {
+      user_details = {
         name: user.name,
         email: user.email,
         phone: user.phone,
@@ -21,7 +21,7 @@ router.post('/login', function(req, res, next) {
       };
 
       console.log("User verified successfully");
-      res.json({ message: 'User verified successfully', user: req.session.users });
+      res.json({ message: 'User verified successfully', user: user_details });
     } else {
       return res.status(400).json({ error: "Invalid email or password" });
     }

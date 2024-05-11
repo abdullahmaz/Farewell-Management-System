@@ -6,7 +6,7 @@ import { SearchIcon } from './icons'
 import { useNavigate } from "react-router-dom"
 
 
-export default function Header(){
+export default function Header({user}){
 
     const navigate = useNavigate();
     function logout(){
@@ -31,6 +31,9 @@ export default function Header(){
                   type="search" />
               </div>
             </form>
+          </div>
+          <div className="text-md">
+          Welcome, {user.name}
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

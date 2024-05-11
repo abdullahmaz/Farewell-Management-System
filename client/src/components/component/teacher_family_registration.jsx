@@ -116,13 +116,6 @@ export default function teacher_family_registration() {
                     <Label htmlFor="teacher-phone">Phone</Label>
                     <Input id="teacher-phone" placeholder="Enter teacher's phone number" type="tel" />
                   </div>
-                  <div>
-                    <Label htmlFor="family-members">Number of Family Members</Label>
-                    <Input
-                      id="family-members"
-                      placeholder="Enter number of family members"
-                      type="number" />
-                  </div>
                   <Button type="submit" variant="primary" className="rounded-md bg-gray-900 text-white">
                     Register Teacher
                   </Button>
@@ -134,14 +127,6 @@ export default function teacher_family_registration() {
                   <div>
                     <Label htmlFor="family-name">Family Name</Label>
                     <Input id="family-name" placeholder="Enter family name" type="text" />
-                  </div>
-                  <div>
-                    <Label htmlFor="family-email">Email</Label>
-                    <Input id="family-email" placeholder="Enter family email" type="email" />
-                  </div>
-                  <div>
-                    <Label htmlFor="family-phone">Phone</Label>
-                    <Input id="family-phone" placeholder="Enter family phone number" type="tel" />
                   </div>
                   <div>
                     <Label htmlFor="family-members">Number of Family Members</Label>

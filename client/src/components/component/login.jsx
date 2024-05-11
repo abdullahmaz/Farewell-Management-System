@@ -8,7 +8,7 @@ import { PartyPopperIcon } from './icons';
 import { useNavigate } from "react-router-dom";
 import { useToast } from '../ui/use-toast';
 
-export default function Login() {
+export default function Login({setUser}) {
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ export default function Login() {
           description: data.error,
           variant: "destructive"
         })
-
+      setUser(data.user);
       navigate("/dashboard");
       toast({
         title: "Login Successful",
