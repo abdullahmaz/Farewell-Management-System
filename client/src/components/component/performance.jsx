@@ -20,7 +20,7 @@ export default function Performance({user, setUser}) {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  function proposeperformance() {
+  function proposeperformance(event) {
     fetch("http://localhost:3000/performance/propose", {
       method: "POST",
       headers: {
@@ -66,8 +66,14 @@ export default function Performance({user, setUser}) {
       });
   }
 
+  useEffect(() => getPerformances,[]);
+
   useEffect(() => {
-    getPerformances();
+    const intervalId = setInterval(() => {
+      getPerformances();
+    }, 5000); // Runs every 5000 milliseconds or 5 seconds
+  
+    return () => clearInterval(intervalId); // Cleanup the interval on component unmount
   }, []);
 
   return (
@@ -85,7 +91,7 @@ export default function Performance({user, setUser}) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
               <div>
                 <h2 className="text-2xl font-bold mb-4">Propose a Performance</h2>
-                <form className="space-y-4">
+                <div className="space-y-4">
                   <div>
                     <Label htmlFor="performance-type">Performance Type</Label>
                     <Select id="performance-type" value={performanceType} onValueChange={setPerformanceType}>
@@ -104,7 +110,7 @@ export default function Performance({user, setUser}) {
                     <Label htmlFor="performance-duration">Duration</Label>
                     <Input
                       id="performance-duration"
-                      placeholder="Enter duration (e.g., 10 minutes)"
+                      placeholder="Enter duration (minutes)"
                       type="text" 
                       value={performanceDuration}
                       onChange={(e) => setPerformanceDuration(e.target.value)}
@@ -119,10 +125,10 @@ export default function Performance({user, setUser}) {
                       onChange={(e) => setPerformanceRequirements(e.target.value)}
                       />
                   </div>
-                  <Button className="mt-2" size="sm" variant="outline" onClick={() => proposeperformance()}>
+                  <Button className="mt-2" size="sm" variant="outline" onClick={proposeperformance}>
                     Submit Proposal
                   </Button>
-                </form>
+                </div>
               </div>
               <div>
                 <h2 className="text-2xl font-bold mb-4">Proposed Performances</h2>

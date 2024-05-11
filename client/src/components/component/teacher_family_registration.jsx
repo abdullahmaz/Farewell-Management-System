@@ -9,6 +9,36 @@ import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, Dropdown
 
 export default function teacher_family_registration() {
   const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [phone, setPhone] = useState('');
+
+  const registerTeacher = () => {
+    fetch("http://localhost:3000/teacher_family/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, subject, phone}),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error)
+          return toast({
+            title: "Registration Failed",
+            description: data.error,
+            variant: "destructive",
+          });
+        toast({
+          title: "Successfully Registered",
+          variant: "success",
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
   return (
     (<div
       className="grid min-h-screen w-full overflow-hidden lg:grid-cols-[280px_1fr]">
@@ -102,19 +132,19 @@ export default function teacher_family_registration() {
                 <form className="space-y-4">
                   <div>
                     <Label htmlFor="teacher-name">Name</Label>
-                    <Input id="teacher-name" placeholder="Enter teacher's name" type="text" />
+                    <Input id="teacher-name" placeholder="Enter teacher's name" type="text" onChange={(e) => setName(e.target.value)}/>
                   </div>
                   <div>
                     <Label htmlFor="teacher-email">Email</Label>
-                    <Input id="teacher-email" placeholder="Enter teacher's email" type="email" />
+                    <Input id="teacher-email" placeholder="Enter teacher's email" type="email" onChange={(e) => setEmail(e.target.value)}/>
                   </div>
                   <div>
                     <Label htmlFor="teacher-subject">Subject</Label>
-                    <Input id="teacher-subject" placeholder="Enter subject taught" type="text" />
+                    <Input id="teacher-subject" placeholder="Enter subject taught" type="text" onChange={(e) => setSubject(e.target.value)}/>
                   </div>
                   <div>
                     <Label htmlFor="teacher-phone">Phone</Label>
-                    <Input id="teacher-phone" placeholder="Enter teacher's phone number" type="tel" />
+                    <Input id="teacher-phone" placeholder="Enter teacher's phone number" type="tel" onChange={(e) => setPhone(e.target.value)}/>
                   </div>
                   <Button type="submit" variant="primary" className="rounded-md bg-gray-900 text-white">
                     Register Teacher

@@ -28,7 +28,7 @@ const App = () => {
           <Route path='/guest' element={<Guest user={user} setUser={setUser}/>} />
           <Route path='/menu' element={<Menu user={user} setUser={setUser}/>} />
           <Route path='/performance' element={<Performance user={user} setUser={setUser}/>} />
-          <Route path='/family' element={<TeacherFamilyRegistration />} />
+          <Route path='/teacher_family' element={<TeacherFamilyRegistration />} />
           <Route path='/senior_students' element={<SeniorStudents />} />
           <Route path='/attendance' element={<Attendance user={user} setUser={setUser}/>} />
           <Route path='/budget' element={<Budget user={user} setUser={setUser}/>} />
