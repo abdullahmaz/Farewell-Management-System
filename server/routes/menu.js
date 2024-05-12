@@ -65,7 +65,7 @@ router.post('/vote/:id', (req, res) => {
             res.status(400).json({ error: 'You have already voted for this item.' });
         } else {
             // Insert vote into Menu_votes table
-            connection.query('INSERT INTO Menu_votes (vote_count, user_id, item_id) VALUES (1, ?, ?)', [userId, itemId], (error, results) => {
+            connection.query('INSERT INTO Menu_votes (vote_count, user_id, item_id) VALUES (0, ?, ?)', [userId, itemId], (error, results) => {
                 if (error) {
                     res.status(500).json({ error: 'Database error during vote insertion' });
                     return;
