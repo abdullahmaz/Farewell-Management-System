@@ -36,6 +36,7 @@ export default function Performance({user, setUser}) {
             variant: "destructive",
           });
         }
+        getPerformances();
         toast({
           title: "Successfully proposed performance",
           variant: "success",
@@ -71,6 +72,7 @@ export default function Performance({user, setUser}) {
       .then((res) => res.json())
       .then((data) => {
         if (!data.error) {
+          getPerformances();
           toast({
             title: "Successfully deleted performance",
             variant: "success",
@@ -93,6 +95,7 @@ export default function Performance({user, setUser}) {
       .then((res) => res.json())
       .then((data) => {
         if (!data.error) {
+          getPerformances();
           toast({
             title: "Successfully voted for performance",
             variant: "success",
@@ -110,13 +113,6 @@ export default function Performance({user, setUser}) {
   }
 
   useEffect(() => getPerformances,[]);
-
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     getPerformances();
-  //   }, 5000);
-  //   return () => clearInterval(intervalId);
-  // }, []);
 
   return (
     (<div

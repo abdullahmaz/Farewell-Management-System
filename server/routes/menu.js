@@ -4,7 +4,6 @@ const connection = require('../database');
 
 router.post('/add', function (req, res) {
     const { name, price, user_id } = req.body;
-    console.log(user_id);
     let errors = [];
     if (!name) errors.push('Name is required');
     if (!price) errors.push('Price is required');

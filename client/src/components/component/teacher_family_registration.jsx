@@ -39,6 +39,7 @@ export default function teacher_family_registration() {
             description: data.error,
             variant: "destructive",
           });
+        getTeachers()
         toast({
           title: "Successfully Registered",
           variant: "success",
@@ -83,6 +84,7 @@ export default function teacher_family_registration() {
             description: data.error,
             variant: "destructive",
           });
+        getFamilies();
         toast({
           title: "Successfully Registered",
           variant: "success",

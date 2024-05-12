@@ -26,7 +26,7 @@ export default function Menu({ user, setUser }) {
             description: data.error,
             variant: "destructive",
           });
-
+        getMenu();
         toast({
           title: "Successfully added item",
           variant: "success",
@@ -66,6 +66,7 @@ export default function Menu({ user, setUser }) {
     .then((data) => {
       if (!data.error) {
         setVotedItems(new Set([...votedItems, id]));
+        getMenu();
         toast({
           title: "Successfuly Voted",
           variant: "success",

@@ -9,10 +9,6 @@ import { useNavigate } from "react-router-dom"
 export default function Header({user, setUser}){
 
     const navigate = useNavigate();
-    function logout(){
-      navigate("/")
-    }
-
     return(
         <header
           className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-amber-300 px-6 dark:bg-gray-800/40">
@@ -60,7 +56,7 @@ export default function Header({user, setUser}){
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={()=>{setUser(null); logout() }}>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={()=>{setUser(null); navigate('/') }}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>

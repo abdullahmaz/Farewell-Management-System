@@ -35,6 +35,7 @@ export default function SeniorStudents() {
                         description: data.error,
                         variant: "destructive",
                     });
+                getCountSeniorStudents();
                 toast({
                     title: "Successfully Registered",
                     variant: "success",
@@ -159,19 +160,19 @@ export default function SeniorStudents() {
                                 <div className="space-y-4">
                                     <div className="space-y-1">
                                         <Label htmlFor="name">Name</Label>
-                                        <Input id="name" placeholder="Enter your name" value={name} onChange={(e) => setName(e.target.value)} />
+                                        <Input id="name" type="text" placeholder="Enter your name" value={name} onChange={(e) => setName(e.target.value)} />
                                     </div>
                                     <div className="space-y-1">
                                         <Label htmlFor="email">Email</Label>
-                                        <Input id="email" placeholder="Enter your email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                        <Input id="email" type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
                                     </div>
                                     <div className="space-y-1">
                                         <Label htmlFor="contact">Contact Number</Label>
-                                        <Input id="contact" placeholder="Enter your contact number" value={contact} onChange={(e) => setContact(e.target.value)} />
+                                        <Input id="contact" type="text" placeholder="Enter your contact number" value={contact} onChange={(e) => setContact(e.target.value)} />
                                     </div>
                                     <div className="space-y-1">
                                         <Label htmlFor="password">Password</Label>
-                                        <Input id="password" placeholder="Enter your password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                        <Input id="password" type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} />
                                     </div>
                                     <div>
                                         <Label className="block text-sm font-medium text-black" htmlFor="dietary">
