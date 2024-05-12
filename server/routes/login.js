@@ -35,7 +35,7 @@ router.post('/login', function(req, res, next) {
     } else {
       // If not a manager, try to log in as a Senior Student
       const seniorStudentQuery = `
-        SELECT User.*, Student.dietary_pref
+        SELECT User.*, Student.dietary_pref, Student.student_id
         FROM User 
         JOIN Student ON User.user_id = Student.user_id 
         JOIN Senior_student ON Student.student_id = Senior_student.student_id 
@@ -51,6 +51,7 @@ router.post('/login', function(req, res, next) {
           const user = results[0];
           const user_details = {
             user_id: user.user_id,
+            student_id: user.student_id,
             name: user.name,
             email: user.email,
             phone: user.contactno,

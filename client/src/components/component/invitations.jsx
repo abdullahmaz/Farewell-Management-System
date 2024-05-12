@@ -7,10 +7,10 @@ import { useToast } from '@/components/ui/use-toast';
 import { useState, useEffect } from "react"
 
 export default function Invitations({ user, setUser }) {
-  const [teachers, setTeachers] = useState();
+  const [guests, setGuests] = useState();
   const toast = useToast();
-  function getTeachers() {
-    fetch("http://localhost:3000/teacher_family/getallteachers", {
+  function getguests() {
+    fetch("http://localhost:3000/guests", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -19,20 +19,21 @@ export default function Invitations({ user, setUser }) {
       .then((res) => res.json())
       .then((data) => {
         if (!data.error) {
-          setTeachers(data.teachers);
+          setGuests(data.guests);
         }
       })
       .catch((e) => {
         console.log(e);
       });
   }
-  function sendinvitation(teacher) {
+
+  function sendinvitation(guest) {
     fetch("http://localhost:3000/invitations/send", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: teacher.email }),
+      body: JSON.stringify({ email: guest.email }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -54,7 +55,7 @@ export default function Invitations({ user, setUser }) {
   }
 
   useEffect(() => {
-    getTeachers();
+    getguests();
   }, []);
 
   return (
@@ -79,24 +80,28 @@ export default function Invitations({ user, setUser }) {
                 </Card>
               </div>
               <div>
-                <h2 className="text-2xl font-bold mb-4">Invite Teachers</h2>
+                <h2 className="text-2xl font-bold mb-4">Invite Guests</h2>
                 <div className="space-y-4">
-                  {teachers && teachers.map((teacher) => (
-                    <Card key={teacher.id}>
-                      <CardContent className="flex items-center justify-between pt-6">
-                        <div className="flex items-center gap-4">
-                          <Avatar>
-                            <AvatarImage alt="Teacher Avatar" src={teacher.avatar || "/placeholder-user.jpg"} />
-                          </Avatar>
-                          <div className="flex flex-col justify-center">
-                            <p className="font-semibold">{teacher.name}</p>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">{teacher.email}</p>
+                  {guests && guests.length > 0 ? (
+                    guests.map((guest) => (
+                      <Card key={guest.id}>
+                        <CardContent className="flex items-center justify-between pt-6">
+                          <div className="flex items-center gap-4">
+                            <Avatar>
+                              <AvatarImage alt="Teacher Avatar" src={guest.avatar || "/placeholder-user.jpg"} />
+                            </Avatar>
+                            <div className="flex flex-col justify-center">
+                              <p className="font-semibold">{guest.name}</p>
+                              <p className="text-sm text-gray-500 dark:text-gray-400">{guest.email}</p>
+                            </div>
                           </div>
-                        </div>
-                        <Button className="bg-gray-900 hover:bg-gray-700 text-white py-2 px-4 rounded" onClick={() => sendinvitation(teacher)}>Send</Button>
-                      </CardContent>
-                    </Card>
-                  ))}
+                          <Button className="bg-gray-900 hover:bg-gray-700 text-white py-2 px-4 rounded" onClick={() => sendinvitation(guest)}>Send</Button>
+                        </CardContent>
+                      </Card>
+                    ))
+                  ) : (
+                    <p>No guests available.</p>
+                  )}
                 </div>
               </div>
             </div>

@@ -94,16 +94,16 @@ router.delete('/:id', function (req, res) {
 });
 
 router.post('/vote/:id', function (req, res) {
-    const userId = req.body.user_id;
+    const studentId = req.body.studentId;
     const performanceId = req.params.id;
 
-    if (!userId) { // Corrected variable name
+    if (!studentId) { // Corrected variable name
         return res.status(400).json({ error: 'User ID is required.' });
     }
 
     // Check if the user has already voted for this performance
     const sqlCheckVote = 'SELECT * FROM Perform_vote WHERE student_id = ? AND p_id = ?';
-    connection.query(sqlCheckVote, [userId, performanceId], function (error, results) { // Corrected variable name
+    connection.query(sqlCheckVote, [studentId, performanceId], function (error, results) { // Corrected variable name
         if (error) {
             res.status(500).json({ error: 'Database error during vote check' });
             return;
@@ -113,7 +113,7 @@ router.post('/vote/:id', function (req, res) {
         } else {
             // Insert vote into Perform_vote table
             const sqlInsertVote = 'INSERT INTO Perform_vote (vote_count, student_id, p_id) VALUES (1, ?, ?)';
-            connection.query(sqlInsertVote, [userId, performanceId], function (err, insertResults) {
+            connection.query(sqlInsertVote, [studentId, performanceId], function (err, insertResults) {
                 if (err) {
                     console.error("Error inserting vote: ", err);
                     return res.status(500).json({ error: "Database error while inserting vote" });
@@ -127,4 +127,5 @@ router.post('/vote/:id', function (req, res) {
 });
 
 module.exports = router;
+
 

@@ -89,7 +89,7 @@ export default function Performance({ user, setUser }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ user_id: user.user_id }),
+      body: JSON.stringify({ studentId: user.student_id }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -187,9 +187,9 @@ export default function Performance({ user, setUser }) {
                           <Button className="mr-2" size="sm" variant="outline" onClick={() => voteForPerformance(performance.p_id)}>
                             Vote
                           </Button>
-                          <Button className="mr-2 text-red-500" size="sm" variant="outline" onClick={() => deletePerformance(performance.p_id)}>
-                            X
-                          </Button>
+                          { user.type === 'manager' && (
+                            <Button className="mr-2 text-red-500" size="sm" variant="outline" onClick={() => deletePerformance(performance.p_id)}>X</Button>
+                          )}
                         </div>
                       </div>
                     ))

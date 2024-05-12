@@ -59,7 +59,7 @@ export default function Dashboard({ setUser, user }) {
                   </TableHeader>
                   <TableBody>
                     {guests && guests.length > 0 ? (
-                      guests.map((guest) => (
+                      guests.slice(0, 4).map((guest) => (  // Only take the first 4 guests
                         <TableRow key={guest.id}>
                           <TableCell className="font-medium">{guest.name}</TableCell>
                           <TableCell>{guest.contactno}</TableCell>

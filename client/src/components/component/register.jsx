@@ -46,7 +46,7 @@ export default function Register({setUser}) {
         <div className="w-full max-w-md">
           <div className="bg-white bg-opacity-40 rounded px-8 pt-6 pb-8 mb-4">
             <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900 mb-4">
-              Register for the Farewell Party
+              Register as manager of the Farewell Party
             </h2>
             <p className="text-center text-sm text-black mb-8">
               Fill out the form below to secure your spot.
