@@ -1,11 +1,38 @@
 import Nav from './nav.jsx'
 import Header from './header'
+import { useState, useEffect } from 'react';
 
 export default function Budget({user, setUser}) {
+  const [menuexpenses, setMenuexpenses] = useState(0);
+  const budget = 10000;
+  const venue = 3000;
+  const decoration = 1000;
+  const entertainment = 2000;
+
+  function getmenuexpenses() {
+    fetch("http://localhost:3000/budget", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.error) {
+          setMenuexpenses(data.totalMenuPrice);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  useEffect(() => {
+    getmenuexpenses();
+  }, []);
+
   return (
-    (<div
-      key="1"
-      className="grid min-h-screen w-full overflow-hidden lg:grid-cols-[280px_1fr]">
+    (<div key="1" className="grid min-h-screen w-full overflow-hidden lg:grid-cols-[280px_1fr]">
       <Nav/>
       <div className="flex flex-col">
         <Header user={user} setUser={setUser}/>
@@ -22,30 +49,30 @@ export default function Budget({user, setUser}) {
                     <h3 className="text-lg font-semibold">Total Budget</h3>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Allocated Budget</p>
-                      <p>$10,000</p>
+                      <p>PKR {budget}</p>
                     </div>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Remaining Budget</p>
-                      <p>$3,500</p>
+                      <p>PKR {parseInt(budget) - (parseInt(menuexpenses) + parseInt(venue) + parseInt(decoration) + parseInt(entertainment))}</p>
                     </div>
                   </div>
                   <div className="border rounded-lg p-4">
                     <h3 className="text-lg font-semibold">Expenses by Category</h3>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Venue</p>
-                      <p>$3,000</p>
+                      <p>PKR {venue}</p>
                     </div>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Catering</p>
-                      <p>$2,500</p>
+                      <p>PKR {menuexpenses}</p>
                     </div>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Decorations</p>
-                      <p>$1,000</p>
+                      <p>PKR {decoration}</p>
                     </div>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Entertainment</p>
-                      <p>$2,000</p>
+                      <p>PKR {entertainment}</p>
                     </div>
                   </div>
                 </div>
@@ -57,34 +84,34 @@ export default function Budget({user, setUser}) {
                     <h3 className="text-lg font-semibold">Overall Budget</h3>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Total Expenses</p>
-                      <p>$6,500</p>
+                      <p>PKR {parseInt(menuexpenses) + parseInt(venue) + parseInt(decoration) + parseInt(entertainment)}</p>
                     </div>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Remaining Budget</p>
-                      <p>$3,500</p>
+                      <p>PKR {parseInt(budget) - (parseInt(menuexpenses) + parseInt(venue) + parseInt(decoration) + parseInt(entertainment))}</p>
                     </div>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Budget Utilization</p>
-                      <p>65%</p>
+                      <p>{(((parseInt(menuexpenses) + parseInt(venue) + parseInt(decoration) + parseInt(entertainment)) / parseInt(budget)) * 100).toFixed(2)}%</p>
                     </div>
                   </div>
                   <div className="border rounded-lg p-4">
                     <h3 className="text-lg font-semibold">Expense Breakdown</h3>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Venue</p>
-                      <p>45%</p>
+                      <p>{((parseInt(venue) / (parseInt(menuexpenses) + parseInt(venue) + parseInt(decoration) + parseInt(entertainment))) * 100).toFixed(2)}%</p>
                     </div>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Catering</p>
-                      <p>38%</p>
+                      <p>{((parseInt(menuexpenses) / (parseInt(menuexpenses) + parseInt(venue) + parseInt(decoration) + parseInt(entertainment))) * 100).toFixed(2)}%</p>
                     </div>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Decorations</p>
-                      <p>15%</p>
+                      <p>{((parseInt(decoration) / (parseInt(menuexpenses) + parseInt(venue) + parseInt(decoration) + parseInt(entertainment))) * 100).toFixed(2)}%</p>
                     </div>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Entertainment</p>
-                      <p>30%</p>
+                      <p>{((parseInt(entertainment) / (parseInt(menuexpenses) + parseInt(venue) + parseInt(decoration) + parseInt(entertainment))) * 100).toFixed(2)}%</p>
                     </div>
                   </div>
                 </div>
