@@ -5,13 +5,39 @@ import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@
 import { Badge } from "@/components/ui/badge"
 import Nav from './nav.jsx'
 import Header from './header.jsx'
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
 
-export default function Dashboard({setUser,user}) {
+export default function Dashboard({ setUser, user }) {
+  const [guests, setGuests] = useState();
+  const navigate = useNavigate();
+  function getguests() {
+    fetch("http://localhost:3000/guests", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.error) {
+          setGuests(data.guests);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  useEffect(() => {
+    getguests();
+  }, []);
+
   return (
     <div className="grid min-h-screen w-full overflow-hidden lg:grid-cols-[280px_1fr]">
       <Nav />
       <div className="flex flex-col">
-        <Header user={user} setUser={setUser}/>
+        <Header user={user} setUser={setUser} />
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
           <div className="flex items-center">
             <h1 className="font-semibold text-lg md:text-2xl">Farewell Party Dashboard</h1>
@@ -28,31 +54,21 @@ export default function Dashboard({setUser,user}) {
                     <TableRow>
                       <TableHead>Name</TableHead>
                       <TableHead>Contact</TableHead>
-                      <TableHead>RSVP</TableHead>
+                      <TableHead>Status</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    <TableRow>
-                      <TableCell className="font-medium">John Doe</TableCell>
-                      <TableCell>john@example.com</TableCell>
-                      <TableCell>
-                        <Badge variant="success">Attending</Badge>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium">Jane Smith</TableCell>
-                      <TableCell>jane@example.com</TableCell>
-                      <TableCell>
-                        <Badge variant="warning">Pending</Badge>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium">Bob Johnson</TableCell>
-                      <TableCell>bob@example.com</TableCell>
-                      <TableCell>
-                        <Badge variant="danger">Declined</Badge>
-                      </TableCell>
-                    </TableRow>
+                    {guests && guests.map((guest) => (
+                      <TableRow key={guest.id}>
+                        <TableCell className="font-medium">{guest.name}</TableCell>
+                        <TableCell>{guest.contactno}</TableCell>
+                        <TableCell>
+                          <Badge variant={'success'}>
+                            Attending
+                          </Badge>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </CardContent>
@@ -66,19 +82,19 @@ export default function Dashboard({setUser,user}) {
                 <div className="grid gap-4">
                   <div className="flex items-center justify-between">
                     <span>Appetizers</span>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" onClick={() => navigate('/menu')}>
                       Suggest Appetizers
                     </Button>
                   </div>
                   <div className="flex items-center justify-between">
                     <span>Main Dishes</span>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" onClick={() => navigate('/menu')}>
                       Suggest Main Dishes
                     </Button>
                   </div>
                   <div className="flex items-center justify-between">
                     <span>Desserts</span>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" onClick={() => navigate('/menu')}>
                       Suggest Desserts
                     </Button>
                   </div>
@@ -94,20 +110,20 @@ export default function Dashboard({setUser,user}) {
                 <div className="grid gap-4">
                   <div className="flex items-center justify-between">
                     <span>Music</span>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" onClick={() => navigate('/performance')}>
                       Volunteer for Music
                     </Button>
                   </div>
                   <div className="flex items-center justify-between">
                     <span>Dance</span>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" onClick={() => navigate('/performance')}>
                       Volunteer for Dance
                     </Button>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span>Emcee</span>
-                    <Button size="sm" variant="outline">
-                      Volunteer for Emcee
+                    <span>Drama</span>
+                    <Button size="sm" variant="outline" onClick={() => navigate('/performance')}>
+                      Volunteer for Drama
                     </Button>
                   </div>
                 </div>
@@ -121,14 +137,8 @@ export default function Dashboard({setUser,user}) {
               <CardContent>
                 <div className="grid gap-4">
                   <div className="flex items-center justify-between">
-                    <span>Check-in</span>
-                    <Button size="sm" variant="outline">
-                      Check-in Guests
-                    </Button>
-                  </div>
-                  <div className="flex items-center justify-between">
                     <span>Attendance Report</span>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" onClick={() => navigate('/attendance')}>
                       View Attendance Report
                     </Button>
                   </div>
@@ -144,19 +154,19 @@ export default function Dashboard({setUser,user}) {
                 <div className="grid gap-4">
                   <div className="flex items-center justify-between">
                     <span>Expenses</span>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" onClick={() => navigate('/budget')}>
                       Track Expenses
                     </Button>
                   </div>
                   <div className="flex items-center justify-between">
                     <span>Revenue</span>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" onClick={() => navigate('/budget')}>
                       Track Revenue
                     </Button>
                   </div>
                   <div className="flex items-center justify-between">
                     <span>Budget Report</span>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" onClick={() => navigate('/budget')}>
                       View Budget Report
                     </Button>
                   </div>
