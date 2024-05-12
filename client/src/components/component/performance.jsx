@@ -17,7 +17,6 @@ export default function Performance({user, setUser}) {
   const [performanceDuration, setPerformanceDuration] = useState();
   const [performanceRequirements, setPerformanceRequirements] = useState();
   const [performances, setPerformances] = useState();
-  const navigate = useNavigate();
   const { toast } = useToast();
 
   function proposeperformance() {
@@ -26,7 +25,7 @@ export default function Performance({user, setUser}) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ performanceType, performanceDuration, performanceRequirements }),
+      body: JSON.stringify({ studentId: user.user_id, performanceType, performanceDuration, performanceRequirements }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -37,7 +36,6 @@ export default function Performance({user, setUser}) {
             variant: "destructive",
           });
         }
-        navigate("/performance");
         toast({
           title: "Successfully proposed performance",
           variant: "success",
@@ -66,14 +64,59 @@ export default function Performance({user, setUser}) {
       });
   }
 
+  function deletePerformance(id) {
+    fetch(`http://localhost:3000/performance/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.error) {
+          toast({
+            title: "Successfully deleted performance",
+            variant: "success",
+          });
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  function voteForPerformance(id) {
+    fetch(`http://localhost:3000/performance/vote/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user_id: user.user_id }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.error) {
+          toast({
+            title: "Successfully voted for performance",
+            variant: "success",
+          });
+        }else{
+          toast({
+            title: "You cannot vote for this performance",
+            variant: "destructive",
+          });
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
   useEffect(() => getPerformances,[]);
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      getPerformances();
-    }, 5000);
-    return () => clearInterval(intervalId);
-  }, []);
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     getPerformances();
+  //   }, 5000);
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   return (
     (<div
@@ -132,20 +175,32 @@ export default function Performance({user, setUser}) {
               <div>
                 <h2 className="text-2xl font-bold mb-4">Proposed Performances</h2>
                 <div className="space-y-4">
-                {performances && performances.length > 0 && performances.map((performance, index) => (
-                  <div key={index} className="border rounded-lg p-4">
-                    <h3 className="text-lg font-semibold">{performance.type.toUpperCase()}</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Duration: {performance.duration} minutes</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Special Requirements: {performance.special_req}
-                    </p>
-                    <div className="flex justify-end mt-2">
-                      <Button className="mr-2" size="sm" variant="outline">
-                        Vote
-                      </Button>
+                {performances && performances.length > 0 ? (
+                  performances.map((performance, index) => (
+                    <div key={index} className="border rounded-lg p-4">
+                      <h3 className="text-lg font-semibold">{performance.type.toUpperCase()}</h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Duration: {performance.duration} minutes</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        Special Requirements: {performance.special_req}
+                      </p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        Votes: {performance.vote_count}
+                      </p>
+                      <div className="flex justify-end mt-2">
+                        <Button className="mr-2" size="sm" variant="outline" onClick={() => voteForPerformance(performance.p_id)}>
+                          Vote
+                        </Button>
+                        <Button className="mr-2 text-red-500" size="sm" variant="outline" onClick={() => deletePerformance(performance.p_id)}>
+                          X
+                        </Button>
+                      </div>
                     </div>
+                  ))
+                ) : (
+                  <div className="text-center py-4">
+                    <p>There are no performances.</p>
                   </div>
-                ))}
+                )}
                 </div>
               </div>
             </div>

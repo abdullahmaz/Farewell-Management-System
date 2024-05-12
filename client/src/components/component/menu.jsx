@@ -66,6 +66,10 @@ export default function Menu({ user, setUser }) {
     .then((data) => {
       if (!data.error) {
         setVotedItems(new Set([...votedItems, id]));
+        toast({
+          title: "Successfuly Voted",
+          variant: "success",
+        });
         getMenu(); // Refresh the menu list after voting
       } else {
         toast({

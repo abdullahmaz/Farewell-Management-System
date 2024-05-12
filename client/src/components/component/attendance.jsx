@@ -91,7 +91,7 @@ export default function attendance({ user, setUser }) {
                   <div className="border rounded-lg p-4">
                     <h3 className="text-lg font-semibold">Families</h3>
                     <div className="flex justify-between items-center">
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Families Members  Attended</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Families Members Attended</p>
                       <p>{familyCount}</p>
                     </div>
                   </div>
@@ -108,28 +108,29 @@ export default function attendance({ user, setUser }) {
                 <h2 className="text-2xl font-bold mb-4">Attendance Report</h2>
                 <div className="space-y-4">
                   <div className="border rounded-lg p-4">
+                  <h3 className="text-lg font-semibold">Overall Attendence</h3>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Total Attendees</p>
                       <p>{parseInt(teacherCount) + parseInt(familyCount) + parseInt(seniorCount)}</p>
                     </div>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Attendance Rate</p>
-                      <p>{((parseInt(teacherCount) + parseInt(familyCount) + parseInt(seniorCount)) / (parseInt(teacherCount) + parseInt(familyCount) + parseInt(seniorCount))) * 100}%</p>
+                      <p>{(parseInt(teacherCount) + parseInt(familyCount) + parseInt(seniorCount)) > 0 ? ((parseInt(teacherCount) + parseInt(familyCount) + parseInt(seniorCount)) / (parseInt(teacherCount) + parseInt(familyCount) + parseInt(seniorCount))) * 100 : 0}%</p>
                     </div>
                   </div>
                   <div className="border rounded-lg p-4">
                     <h3 className="text-lg font-semibold">Attendance by Category</h3>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Teachers Attendance</p>
-                      <p>{((parseInt(teacherCount) / (parseInt(teacherCount) + parseInt(familyCount) + parseInt(seniorCount))) * 100).toFixed(2) + '%'}</p>
+                      <p>{(parseInt(teacherCount) + parseInt(familyCount) + parseInt(seniorCount)) > 0 ? ((parseInt(teacherCount) / (parseInt(teacherCount) + parseInt(familyCount) + parseInt(seniorCount))) * 100).toFixed(2) : '0'}%</p>
                     </div>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Family Attendance</p>
-                      <p>{((parseInt(familyCount) / (parseInt(teacherCount) + parseInt(familyCount) + parseInt(seniorCount))) * 100).toFixed(2) + '%'}</p>
+                      <p>{(parseInt(teacherCount) + parseInt(familyCount) + parseInt(seniorCount)) > 0 ? ((parseInt(familyCount) / (parseInt(teacherCount) + parseInt(familyCount) + parseInt(seniorCount))) * 100).toFixed(2) : '0'}%</p>
                     </div>
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-gray-500 dark:text-gray-400">Senior Students Attendance</p>
-                      <p>{((parseInt(seniorCount) / (parseInt(teacherCount) + parseInt(familyCount) + parseInt(seniorCount))) * 100).toFixed(2) + '%'}</p>
+                      <p>{(parseInt(teacherCount) + parseInt(familyCount) + parseInt(seniorCount)) > 0 ? ((parseInt(seniorCount) / (parseInt(teacherCount) + parseInt(familyCount) + parseInt(seniorCount))) * 100).toFixed(2) : '0'}%</p>
                     </div>
                   </div>
                 </div>

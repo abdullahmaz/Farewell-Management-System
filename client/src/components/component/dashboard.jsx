@@ -58,17 +58,23 @@ export default function Dashboard({ setUser, user }) {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {guests && guests.map((guest) => (
-                      <TableRow key={guest.id}>
-                        <TableCell className="font-medium">{guest.name}</TableCell>
-                        <TableCell>{guest.contactno}</TableCell>
-                        <TableCell>
-                          <Badge variant={'success'}>
-                            Attending
-                          </Badge>
-                        </TableCell>
+                    {guests && guests.length > 0 ? (
+                      guests.map((guest) => (
+                        <TableRow key={guest.id}>
+                          <TableCell className="font-medium">{guest.name}</TableCell>
+                          <TableCell>{guest.contactno}</TableCell>
+                          <TableCell>
+                            <Badge variant={'success'}>
+                              Attending
+                            </Badge>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan="3" className="text-center">No guests attending</TableCell>
                       </TableRow>
-                    ))}
+                    )}
                   </TableBody>
                 </Table>
               </CardContent>
