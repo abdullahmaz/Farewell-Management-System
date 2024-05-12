@@ -3,28 +3,67 @@ const router = express.Router();
 const connection = require('../database');
 /* GET home page. */
 router.post('/login', function(req, res, next) {
-  const {email,password} = req.body
-  connection.query("SELECT * FROM Student JOIN User ON Student.user_id = User.user_id WHERE email = ? AND password = ?", [email, password], function(err, results) {
+  const {email, password} = req.body;
+
+  // First, try to log in as a Manager
+  const managerQuery = `
+    SELECT User.*, Student.dietary_pref
+    FROM User 
+    JOIN Student ON User.user_id = Student.user_id 
+    JOIN Manager ON Student.student_id = Manager.student_id 
+    WHERE User.email = ? AND Student.password = ?`;
+
+  connection.query(managerQuery, [email, password], function(err, results) {
     if (err) {
-      console.error("Error verifying user: ", err);
+      console.error("Error verifying manager: ", err);
       return res.status(500).json({ error: "Database error" });
     }
 
     if (results.length > 0) {
-
-      const user = results[0]; // Assuming unique emails, take the first result
-      user_details = {
+      const user = results[0];
+      const user_details = {
         user_id: user.user_id,
         name: user.name,
         email: user.email,
         phone: user.contactno,
-        diet: user.dietary_pref
+        diet: user.dietary_pref,
+        type: 'manager'
       };
 
-      console.log("User verified successfully");
-      res.json({ message: 'User verified successfully', user: user_details });
+      console.log("Manager verified successfully");
+      return res.json({ message: 'Manager verified successfully', user: user_details });
     } else {
-      return res.status(400).json({ error: "Invalid email or password" });
+      // If not a manager, try to log in as a Senior Student
+      const seniorStudentQuery = `
+        SELECT User.*, Student.dietary_pref
+        FROM User 
+        JOIN Student ON User.user_id = Student.user_id 
+        JOIN Senior_student ON Student.student_id = Senior_student.student_id 
+        WHERE User.email = ? AND Student.password = ?`;
+
+      connection.query(seniorStudentQuery, [email, password], function(err, results) {
+        if (err) {
+          console.error("Error verifying senior student: ", err);
+          return res.status(500).json({ error: "Database error" });
+        }
+
+        if (results.length > 0) {
+          const user = results[0];
+          const user_details = {
+            user_id: user.user_id,
+            name: user.name,
+            email: user.email,
+            phone: user.contactno,
+            diet: user.dietary_pref,
+            type: 'senior student'
+          };
+
+          console.log("Senior Student verified successfully");
+          res.json({ message: 'Senior Student verified successfully', user: user_details });
+        } else {
+          return res.status(400).json({ error: "Invalid email or password" });
+        }
+      });
     }
   });
 });

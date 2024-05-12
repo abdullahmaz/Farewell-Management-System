@@ -14,6 +14,7 @@ var guestsRouter = require('./routes/guests');
 var menuRouter = require('./routes/menu');
 var attendanceRouter = require('./routes/attendance');
 var budgetRouter = require('./routes/budget');
+var invitationRouter = require('./routes/invitation');
 
 var app = express();
 
@@ -36,6 +37,7 @@ app.use('/guests', guestsRouter);
 app.use('/menu', menuRouter);
 app.use('/attendance', attendanceRouter);
 app.use('/budget', budgetRouter);
+app.use('/invitations', invitationRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

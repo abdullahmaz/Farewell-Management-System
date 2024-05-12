@@ -113,7 +113,7 @@ export default function Menu({ user, setUser }) {
   return (
     (<div
       className="grid min-h-screen w-full overflow-hidden lg:grid-cols-[280px_1fr]">
-      <Nav />
+      <Nav user={user} setUser={setUser} />
       <div className="flex flex-col">
         <Header user={user} setUser={setUser} />
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
@@ -145,7 +145,9 @@ export default function Menu({ user, setUser }) {
                       <span className="ml-2 text-xs">(Budget: PKR{item.price})</span>
                       <span className="ml-2 text-xs">Votes: {item.votes}</span>
                       <button className="ml-2" disabled={votedItems.has(item.item_id)} onClick={() => vote(item.item_id)}>Vote</button>
-                      <button className="ml-2 text-red-500 hover:text-red-700" onClick={() => removeItem(item.item_id)}>X</button>
+                      {user.type === 'manager' && (
+                        <button className="ml-2 text-red-500 hover:text-red-700" onClick={() => removeItem(item.item_id)}>X</button>
+                      )}
                     </li>
                   ))}
                 </ul>

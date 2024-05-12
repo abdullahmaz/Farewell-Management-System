@@ -10,8 +10,7 @@ export default function Header({user, setUser}){
 
     const navigate = useNavigate();
     return(
-        <header
-          className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-amber-300 px-6 dark:bg-gray-800/40">
+        <header className="flex h-14 lg:h-[60px] items-center gap-4 bg-amber-300 px-6 dark:bg-gray-800/40">
           <div className="lg:hidden" href="#">
             <Package2Icon className="h-6 w-6" />
             <span className="sr-only">Home</span>

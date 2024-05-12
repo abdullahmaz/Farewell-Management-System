@@ -12,6 +12,7 @@ import Budget from './components/component/budget.jsx'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Toaster } from "@/components/ui/toaster"
 import SeniorStudents from './components/component/senior_students.jsx'
+import Invitations from './components/component/invitations.jsx'
 import { useState } from 'react'
 
 const App = () => {
@@ -26,12 +27,13 @@ const App = () => {
           <Route path='/register' element={<Register setUser={setUser} />} />
           <Route path='/dashboard' element={<Dashboard user={user} setUser={setUser}/>} />
           <Route path='/guests' element={<Guest user={user} setUser={setUser}/>} />
+          <Route path='/invitations' element={<Invitations user={user} setUser={setUser}/>} />
           <Route path='/menu' element={<Menu user={user} setUser={setUser}/>} />
           <Route path='/performance' element={<Performance user={user} setUser={setUser}/>} />
-          <Route path='/teacher_family' element={<TeacherFamilyRegistration />} />
-          <Route path='/senior_students' element={<SeniorStudents />} />
           <Route path='/attendance' element={<Attendance user={user} setUser={setUser}/>} />
           <Route path='/budget' element={<Budget user={user} setUser={setUser}/>} />
+          <Route path='/teacher_family' element={<TeacherFamilyRegistration />} />
+          <Route path='/senior_students' element={<SeniorStudents />} />
         </Routes>
       </Router>
     </React.StrictMode>
