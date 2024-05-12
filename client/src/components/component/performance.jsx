@@ -71,9 +71,8 @@ export default function Performance({user, setUser}) {
   useEffect(() => {
     const intervalId = setInterval(() => {
       getPerformances();
-    }, 5000); // Runs every 5000 milliseconds or 5 seconds
-  
-    return () => clearInterval(intervalId); // Cleanup the interval on component unmount
+    }, 5000);
+    return () => clearInterval(intervalId);
   }, []);
 
   return (

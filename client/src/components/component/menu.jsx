@@ -8,6 +8,7 @@ export default function Menu({ user, setUser }) {
   const [price, setPrice] = useState('');
   const [menu, setMenu] = useState();
   const { toast } = useToast()
+  const [votedItems, setVotedItems] = useState(new Set());
 
   function additem() {
     fetch("http://localhost:3000/menu/add", {
@@ -15,7 +16,7 @@ export default function Menu({ user, setUser }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, price }),
+      body: JSON.stringify({ name, price, user_id: user.user_id }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -53,6 +54,53 @@ export default function Menu({ user, setUser }) {
         console.log(e);
       });
   }
+
+  const vote = (id) => {
+    fetch(`http://localhost:3000/menu/vote/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },body: JSON.stringify({user_id: user.user_id }),
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.error) {
+        setVotedItems(new Set([...votedItems, id]));
+        getMenu(); // Refresh the menu list after voting
+      } else {
+        toast({
+          title: "You cannot vote",
+          variant: "destructive",
+        });
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  };
+
+  function removeItem(id) {
+    fetch(`http://localhost:3000/menu/remove/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.error) {
+        getMenu(); // Refresh the menu list after deletion
+        toast({
+          title: "Successfully removed item",
+          variant: "success",
+        });
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  }
+
   useEffect(() => {
     getMenu();
   }, []);
@@ -91,7 +139,8 @@ export default function Menu({ user, setUser }) {
                       {item.name}
                       <span className="ml-2 text-xs">(Budget: PKR{item.price})</span>
                       <span className="ml-2 text-xs">Votes: {item.votes}</span>
-                      <button className="ml-2">Vote</button>
+                      <button className="ml-2" disabled={votedItems.has(item.item_id)} onClick={() => vote(item.item_id)}>Vote</button>
+                      <button className="ml-2 text-red-500 hover:text-red-700" onClick={() => removeItem(item.item_id)}>X</button>
                     </li>
                   ))}
                 </ul>

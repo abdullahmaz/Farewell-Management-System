@@ -14,6 +14,7 @@ router.post('/login', function(req, res, next) {
 
       const user = results[0]; // Assuming unique emails, take the first result
       user_details = {
+        user_id: user.user_id,
         name: user.name,
         email: user.email,
         phone: user.contactno,

@@ -65,7 +65,7 @@ router.post('/register', function(req, res) {
           }
 
           console.log("Manager registered successfully", result);
-          res.json({ message: 'Manager registered successfully', user: { name, email, phone, diet } });
+          res.json({ message: 'Manager registered successfully', user: { name, email, phone, diet, user_id: userId } });
         });
       });
     });
