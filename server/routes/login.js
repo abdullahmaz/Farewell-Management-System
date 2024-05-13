@@ -7,7 +7,7 @@ router.post('/login', function(req, res, next) {
 
   // First, try to log in as a Manager
   const managerQuery = `
-    SELECT User.*, Student.dietary_pref
+    SELECT User.*, Student.dietary_pref, Student.student_id, Manager.manager_id
     FROM User 
     JOIN Student ON User.user_id = Student.user_id 
     JOIN Manager ON Student.student_id = Manager.student_id 
@@ -23,11 +23,13 @@ router.post('/login', function(req, res, next) {
       const user = results[0];
       const user_details = {
         user_id: user.user_id,
+        student_id: user.student_id,
         name: user.name,
         email: user.email,
         phone: user.contactno,
         diet: user.dietary_pref,
-        type: 'manager'
+        type: 'manager',
+        manager_id: user.manager_id
       };
 
       console.log("Manager verified successfully");

@@ -8,7 +8,7 @@ export default function Menu({ user, setUser }) {
   const [price, setPrice] = useState('');
   const [menu, setMenu] = useState();
   const { toast } = useToast()
-  const [votedItems, setVotedItems] = useState(new Set());
+  // const [votedItems, setVotedItems] = useState(new Set());
 
   function additem() {
     fetch("http://localhost:3000/menu/add", {
@@ -65,7 +65,7 @@ export default function Menu({ user, setUser }) {
     .then((res) => res.json())
     .then((data) => {
       if (!data.error) {
-        setVotedItems(new Set([...votedItems, id]));
+        // setVotedItems(new Set([...votedItems, id]));
         getMenu();
         toast({
           title: "Successfuly Voted",
@@ -142,9 +142,10 @@ export default function Menu({ user, setUser }) {
                   {menu && menu.map((item, index) => (
                     <li key={index}>
                       {item.name}
+                      {/* disabled={votedItems.has(item.item_id)} */}
                       <span className="ml-2 text-xs">(Budget: PKR{item.price})</span>
                       <span className="ml-2 text-xs">Votes: {item.votes}</span>
-                      <button className="ml-2" disabled={votedItems.has(item.item_id)} onClick={() => vote(item.item_id)}>Vote</button>
+                      <button className="ml-2"  onClick={() => vote(item.item_id)}>Vote</button>
                       {user.type === 'manager' && (
                         <button className="ml-2 text-red-500 hover:text-red-700" onClick={() => removeItem(item.item_id)}>X</button>
                       )}

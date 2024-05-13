@@ -4,12 +4,12 @@ const connection = require('../database');
 const bodyParser = require('body-parser');
 /* GET home page. */
 router.post('/propose', function (req, res) {
-    const { studentId, performanceType, performanceDuration, performanceRequirements } = req.body;
+    const { managerId, studentId, performanceType, performanceDuration, performanceRequirements } = req.body;
 
     let errors = [];
 
-    if (!studentId) {
-        errors.push("Student ID is required");
+    if (!managerId) {
+        errors.push("Manager ID is required");
     }
     if (!performanceType) {
         errors.push("Performance type is required");
@@ -26,7 +26,7 @@ router.post('/propose', function (req, res) {
     }
 
     const sqlPerformance = "INSERT INTO Performance (manager_id, type, duration, special_req) VALUES (?, ?, ?, ?)";
-    const valuesPerformance = [studentId, performanceType, performanceDuration, performanceRequirements];
+    const valuesPerformance = [managerId, performanceType, performanceDuration, performanceRequirements];
 
     connection.query(sqlPerformance, valuesPerformance, function (err, results) {
         if (err) {
@@ -100,7 +100,6 @@ router.post('/vote/:id', function (req, res) {
     if (!studentId) { // Corrected variable name
         return res.status(400).json({ error: 'User ID is required.' });
     }
-
     // Check if the user has already voted for this performance
     const sqlCheckVote = 'SELECT * FROM Perform_vote WHERE student_id = ? AND p_id = ?';
     connection.query(sqlCheckVote, [studentId, performanceId], function (error, results) { // Corrected variable name

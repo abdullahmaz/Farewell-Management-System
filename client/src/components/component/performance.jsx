@@ -24,7 +24,7 @@ export default function Performance({ user, setUser }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ studentId: user.user_id, performanceType, performanceDuration, performanceRequirements }),
+      body: JSON.stringify({ managerId: user.manager_id, studentId: user.student_id, performanceType, performanceDuration, performanceRequirements }),
     })
       .then((res) => res.json())
       .then((data) => {
