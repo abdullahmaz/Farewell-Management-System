@@ -8,7 +8,7 @@ import { useState, useEffect } from "react"
 
 export default function Invitations({ user, setUser }) {
   const [guests, setGuests] = useState();
-  const toast = useToast();
+  const { toast } = useToast();
   function getguests() {
     fetch("http://localhost:3000/guests", {
       method: "GET",
