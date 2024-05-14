@@ -66,7 +66,7 @@ router.post('/register', function(req, res) {
 
           console.log("Manager registered successfully", result);
           const managerId = result.insertId;
-          res.json({ message: 'Manager registered successfully', user: { name, email, phone, diet, user_id: userId, manager_id: managerId, type: 'manager' } });
+          res.json({ message: 'Manager registered successfully', user: { name, email, phone, diet, user_id: userId, student_id: studentId, manager_id: managerId, type: 'manager' } });
         });
       });
     });
