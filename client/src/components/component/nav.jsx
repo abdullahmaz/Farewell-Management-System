@@ -21,19 +21,19 @@ export default function Nav({ user, setUser }) {
           <nav className="grid items-start px-4 text-sm font-medium">
             {user.type === 'manager' && (
               <>
-                <Link className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white dark:text-gray-400 dark:hover:text-gray-50" to="/dashboard">
+                <Link className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white hover:bg-black dark:text-gray-400 dark:hover:text-gray-50" to="/dashboard">
                   <HomeIcon className="h-6 w-6" />
                   Dashboard
                 </Link>
-                <Link className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white dark:text-gray-400 dark:hover:text-gray-50" to="/attendance">
+                <Link className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white hover:bg-black dark:text-gray-400 dark:hover:text-gray-50" to="/attendance">
                   <ClipboardIcon className="h-6 w-6" />
                   Attendance Tracking
                 </Link>
-                <Link className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white dark:text-gray-400 dark:hover:text-gray-50" to="/budget">
+                <Link className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white hover:bg-black dark:text-gray-400 dark:hover:text-gray-50" to="/budget">
                   <DollarSignIcon className="h-6 w-6" />
                   Budget Tracking
                 </Link>
-                <Link className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white dark:text-gray-400 dark:hover:text-gray-50" to="/invitations">
+                <Link className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white hover:bg-black dark:text-gray-400 dark:hover:text-gray-50" to="/invitations">
                   <MailIcon className="h-6 w-6" />
                   Invitations
                 </Link>
@@ -41,15 +41,15 @@ export default function Nav({ user, setUser }) {
             )}
             {['manager', 'senior student'].includes(user.type) && (
               <>
-                <Link className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white dark:text-gray-400 dark:hover:text-gray-50" to="/guests">
+                <Link className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white hover:bg-black dark:text-gray-400 dark:hover:text-gray-50" to="/guests">
                   <UsersIcon className="h-6 w-6" />
                   Guest List
                 </Link>
-                <Link className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white dark:text-gray-400 dark:hover:text-gray-50" to="/menu">
+                <Link className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white hover:bg-black dark:text-gray-400 dark:hover:text-gray-50" to="/menu">
                   <ClipboardIcon className="h-6 w-6" />
                   Menu Suggestions
                 </Link>
-                <Link className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white dark:text-gray-400 dark:hover:text-gray-50" to="/performance">
+                <Link className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-white hover:bg-black dark:text-gray-400 dark:hover:text-gray-50" to="/performance">
                   <UsersIcon className="h-6 w-6" />
                   Performance Volunteer
                 </Link>
